@@ -69,16 +69,15 @@ The city cards other than Lisbon are stock photos under the [Unsplash License](h
 
 ## Deploy on GitHub Pages
 
-The site is a static build. `.github/workflows/deploy.yml` builds it on every push to `main` and publishes `dist/`. `public/CNAME` sets the custom domain to `topbunktravel.westonwatson.com`.
+No GitHub Actions. `npm run deploy` builds the site and pushes `dist/` to the `gh-pages` branch. GitHub Pages serves that branch. `public/CNAME` sets the custom domain, and `public/.nojekyll` stops GitHub from running Jekyll on the build.
 
 One-time setup in the GitHub repo:
 
-1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**.
+1. **Settings → Pages → Build and deployment → Source:** choose **Deploy from a branch**, then branch `gh-pages`, folder `/ (root)`. Run `npm run deploy` once first so the branch exists.
 2. **Settings → Pages → Custom domain:** `topbunktravel.westonwatson.com`, then enable **Enforce HTTPS** once the certificate is ready.
-3. **Settings → Secrets and variables → Actions → Variables:** add `PUBLIC_TRAVELER_FORM_ENDPOINT` and `PUBLIC_HOSTEL_FORM_ENDPOINT`. Use the Formspree URLs.
-4. DNS: add a `CNAME` record for `topbunktravel` on `westonwatson.com` pointing to `westonrwatson.github.io`.
+3. DNS: add a `CNAME` record for `topbunktravel` on `westonwatson.com` pointing to `westonrwatson.github.io`.
 
-`PUBLIC_` values are baked in at build time. Change one, then push or re-run the workflow.
+Run `npm run deploy` from your machine each time you want to publish. It reads `PUBLIC_TRAVELER_FORM_ENDPOINT` and `PUBLIC_HOSTEL_FORM_ENDPOINT` from your local `.env`, since `.env` is never committed. `PUBLIC_` values are baked in at build time, so change `.env` and re-run the deploy.
 
 ## Scripts
 
@@ -87,3 +86,4 @@ One-time setup in the GitHub repo:
 | `npm run dev` | Local development |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve the production build locally |
+| `npm run deploy` | Build and publish `dist/` to the `gh-pages` branch |
