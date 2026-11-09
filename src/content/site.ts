@@ -127,7 +127,7 @@ export const site = {
 	},
 	hostels: {
 		title: "For Hostels",
-		intro: "A different way to fill the beds you choose to release. No commission. Guests who have already paid.",
+		intro: "Become a founding partner. Here’s what you get:",
 		benefits: [
 			"Free professional photos and video.",
 			"Featured in our city guides and social channels.",
@@ -135,16 +135,12 @@ export const site = {
 			"Prepaid guests, so you never chase payment.",
 			"You choose which beds and nights go to members.",
 		],
-		formTitle: "Become a founding partner hostel.",
 		hostelName: "Hostel name",
 		city: "City",
 		website: "Website",
 		websiteHint: "Optional",
 		contactName: "Contact name",
 		email: "Email",
-		beds: "Number of beds",
-		bestTime: "Best time to talk",
-		bestTimeHint: "Optional",
 		consentLead: "I agree to the",
 		consentLink: "privacy policy",
 		consentTail: "and to be contacted about becoming a partner.",
@@ -193,7 +189,6 @@ export const site = {
 		email: "Enter an email address like you@example.com.",
 		consent: "Please agree so we can write to you.",
 		url: "Enter a website, like yourhostel.com.",
-		beds: "Enter the number of beds, at least 1.",
 		requiredNote: "Fields marked * are required.",
 	},
 	privacy: {
@@ -203,7 +198,7 @@ export const site = {
 		sections: [
 			{
 				heading: "What we collect",
-				body: "If you join the traveler waitlist, we collect your email and the answers you choose about where and when you’d like to travel. If you run a hostel, we collect your hostel’s name, city, website, a contact name, email, number of beds, and the best time to talk.",
+				body: "If you join the traveler waitlist, we collect your email and the answers you choose about where and when you’d like to travel. If you run a hostel, we collect your hostel’s name, city, website, a contact name, and email.",
 			},
 			{
 				heading: "How we use it",

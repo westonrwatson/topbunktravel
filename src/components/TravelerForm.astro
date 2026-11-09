@@ -16,7 +16,6 @@ const form = site.travelerForm;
 		<h2 id="waitlist-title" class="section-title">{form.title}</h2>
 		<form class="signup" novalidate data-endpoint={endpoint} data-form="traveler">
 			<div data-fields>
-				<p class="required-note">{site.forms.requiredNote}</p>
 				<div class="form-grid cols-2">
 					<div class="field span-2">
 						<label class="field-label" for="traveler-email">
@@ -86,6 +85,7 @@ const form = site.travelerForm;
 							</span>
 						</label>
 						<p id="traveler-consent-error" class="field-error" hidden></p>
+						<p class="required-note">{site.forms.requiredNote}</p>
 					</div>
 				</div>
 
@@ -175,7 +175,7 @@ const form = site.travelerForm;
 	}
 
 	.required-note {
-		margin-bottom: 0.35rem;
+		margin: 0.15rem 0 0;
 	}
 
 	.form-grid {

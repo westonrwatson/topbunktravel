@@ -7,9 +7,8 @@ import { site } from "../content/site";
 		<h2 id="why-title" data-reveal>{site.why.title}</h2>
 		<ol>
 			{
-				site.why.items.map((item, index) => (
+				site.why.items.map((item) => (
 					<li data-reveal>
-						<span class="index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
 						<h3>{item.title}</h3>
 						<p>{item.body}</p>
 					</li>
@@ -50,12 +49,6 @@ import { site } from "../content/site";
 		border-bottom: 1.5px solid var(--black);
 	}
 
-	.index {
-		font-family: var(--font-wordmark);
-		font-size: 1.65rem;
-		line-height: 1;
-	}
-
 	h3 {
 		margin: 0;
 		font-family: var(--font-serif);
@@ -74,7 +67,7 @@ import { site } from "../content/site";
 
 	@media (min-width: 800px) {
 		li {
-			grid-template-columns: 3.5rem minmax(12rem, 0.9fr) minmax(16rem, 1.2fr);
+			grid-template-columns: minmax(12rem, 0.9fr) minmax(16rem, 1.2fr);
 			align-items: baseline;
 			gap: 1rem 1.75rem;
 			padding-block: 1.45rem;

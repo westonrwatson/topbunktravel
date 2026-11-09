@@ -21,8 +21,9 @@
 	--font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 	--gutter: clamp(1.15rem, 3.6vw, 3.25rem);
+	--edge: 1.15rem;
 	--section: clamp(4.25rem, 9vw, 7.5rem);
-	--wide: 1240px;
+	--wide: 1120px;
 	--radius: 18px;
 
 	--step-display: clamp(3.5rem, 12vw, 10rem);
@@ -121,6 +122,11 @@ a {
 .wrap,
 .wrap-wide {
 	width: min(100% - var(--gutter) * 2, var(--wide));
+	margin-inline: auto;
+}
+
+.edge {
+	width: calc(100% - var(--edge) * 2);
 	margin-inline: auto;
 }
 

@@ -5,14 +5,14 @@ import hero from "../assets/images/syd-hostel.png";
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-	<div class="wrap-wide hero-grid">
+	<div class="edge hero-grid">
 		<h1 id="hero-title" class="sr-only">Top Bunk Travel</h1>
 		<FilmImage
 			class="hero-photo"
 			src={hero}
 			alt={site.hero.imageAlt}
 			widths={[480, 720, 906]}
-			sizes="(min-width: 900px) 1200px, 100vw"
+			sizes="100vw"
 			loading="eager"
 			fetchpriority="high"
 			aspect="5 / 4"
@@ -37,7 +37,7 @@ import hero from "../assets/images/syd-hostel.png";
 
 	@media (min-width: 900px) {
 		.hero-grid :global(.hero-photo) {
-			aspect-ratio: 16 / 10;
+			aspect-ratio: 2 / 1;
 		}
 	}
 </style>

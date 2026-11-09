@@ -42,9 +42,6 @@ function validate(form: HTMLFormElement): Field | null {
 		} else if (value && field.dataset.kind === "url") {
 			const bare = value.replace(/^https?:\/\//i, "");
 			if (!/^[^\s]+\.[^\s]{2,}$/.test(bare)) message = site.forms.url;
-		} else if (value && field.dataset.kind === "beds") {
-			const beds = Number(value);
-			if (!Number.isInteger(beds) || beds < 1) message = site.forms.beds;
 		}
 
 		if (message) {
