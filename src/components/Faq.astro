@@ -1,0 +1,124 @@
+---
+import { site } from "../content/site";
+---
+
+<section class="section faq" id="faq" aria-labelledby="faq-title">
+	<div class="wrap">
+		<h2 id="faq-title" class="section-title" data-reveal>{site.faq.title}</h2>
+		<div class="faq-list" data-faq>
+			{
+				site.faq.items.map((item, index) => {
+					const panelId = `faq-panel-${index + 1}`;
+					const buttonId = `faq-button-${index + 1}`;
+					return (
+						<div class="faq-item">
+							<h3>
+								<button
+									type="button"
+									class="faq-trigger"
+									id={buttonId}
+									aria-expanded="false"
+									aria-controls={panelId}
+								>
+									<span>{item.q}</span>
+									<span class="faq-icon" aria-hidden="true" />
+								</button>
+							</h3>
+							<div id={panelId} class="faq-panel" role="region" aria-labelledby={buttonId} hidden>
+								<p>
+									{item.a}
+									{index === site.faq.items.length - 1 && (
+										<>
+											{" "}
+											<a href="/privacy">Read the privacy policy</a>.
+										</>
+									)}
+								</p>
+							</div>
+						</div>
+					);
+				})
+			}
+		</div>
+	</div>
+</section>
+
+<script>
+	import { initFaq } from "../scripts/faq";
+	initFaq();
+</script>
+
+<style>
+	.faq-list {
+		margin-top: 1.25rem;
+		border-top: 1px solid rgba(17, 17, 17, 0.14);
+	}
+
+	.faq-item {
+		border-bottom: 1px solid rgba(17, 17, 17, 0.14);
+	}
+
+	h3 {
+		font-weight: 400;
+	}
+
+	.faq-trigger {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+		padding: 1.15rem 0;
+		border: 0;
+		background: transparent;
+		text-align: left;
+		cursor: pointer;
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: clamp(1.4rem, 2.4vw, 2rem);
+		line-height: 1.15;
+		color: var(--black);
+	}
+
+	.faq-icon {
+		width: 0.9rem;
+		height: 0.9rem;
+		position: relative;
+		flex: none;
+		margin-top: 0.45rem;
+	}
+
+	.faq-icon::before,
+	.faq-icon::after {
+		content: "";
+		position: absolute;
+		background: var(--red);
+	}
+
+	.faq-icon::before {
+		left: 0;
+		right: 0;
+		top: 42%;
+		height: 1.5px;
+	}
+
+	.faq-icon::after {
+		top: 0;
+		bottom: 0;
+		left: 42%;
+		width: 1.5px;
+	}
+
+	.faq-trigger[aria-expanded="true"] .faq-icon::after {
+		display: none;
+	}
+
+	.faq-panel {
+		padding: 0 0 1.2rem;
+		max-width: 40rem;
+	}
+
+	.faq-panel a {
+		color: var(--red);
+	}
+</style>

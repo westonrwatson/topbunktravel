@@ -1,0 +1,68 @@
+---
+import { site } from "../content/site";
+import HostelForm from "./HostelForm.astro";
+---
+
+<section class="hostel on-red" id="hostels" aria-labelledby="hostel-title">
+	<div class="wrap hostel-layout">
+		<div data-reveal>
+			<h2 id="hostel-title">{site.hostels.title}</h2>
+			<p class="intro">{site.hostels.intro}</p>
+			<ul class="benefits">
+				{site.hostels.benefits.map((item) => <li>{item}</li>)}
+			</ul>
+		</div>
+		<div data-reveal>
+			<HostelForm />
+		</div>
+	</div>
+</section>
+
+<style>
+	.hostel {
+		background: var(--red);
+		color: var(--white);
+		padding-block: var(--section);
+	}
+
+	.hostel-layout {
+		display: grid;
+		gap: 2.75rem;
+	}
+
+	h2 {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-weight: 400;
+		font-size: var(--step-h2);
+		line-height: 0.9;
+		color: var(--white);
+	}
+
+	.intro {
+		margin-top: 1rem;
+		max-width: 34rem;
+		font-size: 1.05rem;
+	}
+
+	.benefits {
+		list-style: none;
+		margin: 1.6rem 0 0;
+		padding: 0;
+		display: grid;
+		gap: 0.95rem;
+	}
+
+	.benefits li {
+		padding-left: 0.95rem;
+		border-left: 3px solid var(--yellow);
+	}
+
+	@media (min-width: 960px) {
+		.hostel-layout {
+			grid-template-columns: 0.9fr 1.1fr;
+			gap: 4rem;
+			align-items: start;
+		}
+	}
+</style>

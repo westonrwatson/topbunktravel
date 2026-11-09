@@ -1,0 +1,36 @@
+---
+import { site } from "../content/site";
+---
+
+<section class="founding" aria-labelledby="founding-title">
+	<div class="wrap founding-inner" data-reveal>
+		<h2 id="founding-title">{site.founding.title}</h2>
+		<p>{site.founding.note}</p>
+	</div>
+</section>
+
+<style>
+	.founding {
+		background: var(--orange);
+		color: var(--black);
+	}
+
+	.founding-inner {
+		padding-block: clamp(2.5rem, 6vw, 4.25rem);
+		display: grid;
+		gap: 1rem;
+	}
+
+	h2 {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-weight: 400;
+		font-size: clamp(1.9rem, 4vw, 3.15rem);
+		line-height: 1.08;
+	}
+
+	p {
+		max-width: 36rem;
+		font-size: 1rem;
+	}
+</style>

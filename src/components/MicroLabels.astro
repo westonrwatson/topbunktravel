@@ -1,0 +1,41 @@
+---
+import { site } from "../content/site";
+---
+
+<div class="wrap-wide">
+	<ul class="microstrip" aria-label="A few things we care about">
+		{site.microLabels.map((label) => <li>{label}</li>)}
+	</ul>
+</div>
+
+<style>
+	.microstrip {
+		display: flex;
+		justify-content: center;
+		gap: 0.4rem 0.7rem;
+		flex-wrap: wrap;
+		list-style: none;
+		margin: 0;
+		padding: 1.15rem 0 0;
+		color: var(--red);
+		font-size: 0.75rem;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.microstrip li:last-child {
+		display: none;
+	}
+
+	@media (min-width: 800px) {
+		.microstrip {
+			justify-content: space-between;
+		}
+
+		.microstrip li:last-child {
+			display: list-item;
+		}
+	}
+</style>

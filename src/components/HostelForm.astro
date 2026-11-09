@@ -1,0 +1,144 @@
+---
+import { site } from "../content/site";
+
+const endpoint = import.meta.env.PUBLIC_HOSTEL_FORM_ENDPOINT ?? "";
+const copy = site.hostels;
+---
+
+<form class="hostel-form on-red" novalidate data-endpoint={endpoint} data-form="hostel">
+	<div data-fields>
+		<h3>{copy.formTitle}</h3>
+		<p class="required-note">{site.forms.requiredNote}</p>
+		<div class="form-grid cols-2">
+			<div class="field">
+				<label class="field-label" for="hostel-name">
+					{copy.hostelName} <span class="req" aria-hidden="true">*</span>
+				</label>
+				<input id="hostel-name" name="hostel_name" type="text" autocomplete="organization" required aria-describedby="hostel-name-error" />
+				<p id="hostel-name-error" class="field-error" hidden></p>
+			</div>
+			<div class="field">
+				<label class="field-label" for="hostel-city">
+					{copy.city} <span class="req" aria-hidden="true">*</span>
+				</label>
+				<input id="hostel-city" name="city" type="text" autocomplete="address-level2" required aria-describedby="hostel-city-error" />
+				<p id="hostel-city-error" class="field-error" hidden></p>
+			</div>
+			<div class="field span-2">
+				<label class="field-label" for="hostel-website">
+					{copy.website} <span class="hint">({copy.websiteHint})</span>
+				</label>
+				<input id="hostel-website" name="website" type="text" inputmode="url" data-kind="url" autocomplete="url" aria-describedby="hostel-website-error" />
+				<p id="hostel-website-error" class="field-error" hidden></p>
+			</div>
+			<div class="field">
+				<label class="field-label" for="hostel-contact">
+					{copy.contactName} <span class="req" aria-hidden="true">*</span>
+				</label>
+				<input id="hostel-contact" name="contact_name" type="text" autocomplete="name" required aria-describedby="hostel-contact-error" />
+				<p id="hostel-contact-error" class="field-error" hidden></p>
+			</div>
+			<div class="field">
+				<label class="field-label" for="hostel-email">
+					{copy.email} <span class="req" aria-hidden="true">*</span>
+				</label>
+				<input id="hostel-email" name="email" type="email" autocomplete="email" required aria-describedby="hostel-email-error" />
+				<p id="hostel-email-error" class="field-error" hidden></p>
+			</div>
+			<div class="field">
+				<label class="field-label" for="hostel-beds">
+					{copy.beds} <span class="req" aria-hidden="true">*</span>
+				</label>
+				<input id="hostel-beds" name="beds" type="number" min="1" step="1" inputmode="numeric" data-kind="beds" required aria-describedby="hostel-beds-error" />
+				<p id="hostel-beds-error" class="field-error" hidden></p>
+			</div>
+			<div class="field">
+				<label class="field-label" for="hostel-time">
+					{copy.bestTime} <span class="hint">({copy.bestTimeHint})</span>
+				</label>
+				<input id="hostel-time" name="best_time" type="text" autocomplete="off" />
+			</div>
+			<div class="field span-2">
+				<label class="check" for="hostel-consent">
+					<input id="hostel-consent" name="consent" type="checkbox" value="yes" required aria-describedby="hostel-consent-error" />
+					<span>
+						{copy.consentLead} <a href="/privacy">{copy.consentLink}</a> {copy.consentTail}
+						<span class="req" aria-hidden="true">*</span>
+					</span>
+				</label>
+				<p id="hostel-consent-error" class="field-error" hidden></p>
+			</div>
+		</div>
+
+		<p class="hp" aria-hidden="true">
+			<label>
+				Leave this blank
+				<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+			</label>
+		</p>
+
+		<p class="form-alert" data-alert role="alert" hidden></p>
+		<button class="btn btn-black" type="submit">
+			<span data-label>{copy.submit}</span>
+		</button>
+	</div>
+	<p class="success hostel-success" data-success role="status" tabindex="-1" hidden>{copy.success}</p>
+</form>
+
+<script>
+	import { bindForm } from "../scripts/form";
+	bindForm(document.querySelector<HTMLFormElement>("[data-form='hostel']"));
+</script>
+
+<style>
+	.hostel-form,
+	.hostel-form [data-fields] {
+		display: grid;
+		gap: 1rem;
+	}
+
+	h3 {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-weight: 400;
+		font-size: clamp(1.8rem, 3vw, 2.5rem);
+		line-height: 1.1;
+		margin-bottom: 0.35rem;
+		color: var(--white);
+	}
+
+	.field-label,
+	.legend,
+	.check,
+	.required-note,
+	.hint {
+		color: var(--white);
+	}
+
+	.req {
+		color: var(--white);
+	}
+
+	.check a {
+		color: var(--white);
+	}
+
+	.check input {
+		accent-color: var(--black);
+	}
+
+	.field-error {
+		color: var(--black);
+		background: var(--white);
+		padding: 0.25rem 0.45rem;
+		width: fit-content;
+	}
+
+	.hostel-success {
+		color: var(--white);
+	}
+
+	.form-grid {
+		margin-bottom: 0.35rem;
+	}
+</style>

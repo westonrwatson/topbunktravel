@@ -1,0 +1,215 @@
+---
+import { site } from "../content/site";
+import FilmImage from "./FilmImage.astro";
+import lisbon from "../assets/images/lisbon.png";
+import porto from "../assets/images/porto.jpg";
+import seville from "../assets/images/seville.jpg";
+import granada from "../assets/images/granada.jpg";
+import madrid from "../assets/images/madrid.jpg";
+import valencia from "../assets/images/valencia.jpg";
+
+const photos = {
+	lisbon: { src: lisbon, widths: [320, 480, 546], position: "center" },
+	porto: { src: porto, widths: [400, 700, 1100], position: "center 58%" },
+	seville: { src: seville, widths: [400, 700, 1100], position: "center" },
+	granada: { src: granada, widths: [400, 700, 1100], position: "center" },
+	madrid: { src: madrid, widths: [400, 700, 1100], position: "center 70%" },
+	valencia: { src: valencia, widths: [400, 700, 1100], position: "center" },
+};
+---
+
+<section class="section route" id="locations" aria-labelledby="route-title">
+	<div class="wrap-wide">
+		<div class="route-head" data-reveal>
+			<h2 id="route-title" class="section-title">{site.route.title}</h2>
+			<p class="route-sub">{site.route.subline}</p>
+			<p class="badge">{site.route.badge}</p>
+		</div>
+
+		<div class="carousel" data-carousel>
+			<div
+				class="track"
+				data-track
+				tabindex="0"
+				role="region"
+				aria-roledescription="carousel"
+				aria-label="Cities you can stay in"
+			>
+				{
+					site.route.cities.map((city, index) => (
+						<article class="city-card">
+							{city.photo ? (
+								<FilmImage
+									src={photos[city.photo].src}
+									alt={city.alt}
+									widths={photos[city.photo].widths}
+									sizes="280px"
+									aspect="3 / 4"
+									objectPosition={photos[city.photo].position}
+								/>
+							) : (
+								<div class:list={["type-panel", index % 2 === 0 ? "panel-a" : "panel-b"]} aria-hidden="true">
+									<p class="type-name">{city.name}</p>
+								</div>
+							)}
+							<h3 class="city-caption">{city.name}</h3>
+						</article>
+					))
+				}
+			</div>
+			<div class="carousel-controls">
+				<button type="button" data-dir="-1" aria-label="Previous city">
+					<span aria-hidden="true">←</span>
+				</button>
+				<button type="button" data-dir="1" aria-label="Next city">
+					<span aria-hidden="true">→</span>
+				</button>
+			</div>
+		</div>
+
+	</div>
+</section>
+
+<script>
+	import { initCarousel } from "../scripts/carousel";
+	initCarousel();
+</script>
+
+<style>
+	.route-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.65rem 1.25rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.route-sub {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: clamp(1.25rem, 2vw, 1.8rem);
+		line-height: 1.1;
+	}
+
+	.badge {
+		margin-left: auto;
+	}
+
+	.track {
+		display: flex;
+		gap: 0.9rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+		padding-bottom: 0.25rem;
+	}
+
+	.track::-webkit-scrollbar {
+		display: none;
+	}
+
+	.city-card {
+		flex: 0 0 min(72vw, 270px);
+		scroll-snap-align: start;
+	}
+
+	.type-panel {
+		aspect-ratio: 3 / 4;
+		border-radius: var(--radius);
+		border: 1px solid rgba(17, 17, 17, 0.08);
+		display: flex;
+		align-items: flex-end;
+		padding: 1.15rem;
+		position: relative;
+		overflow: hidden;
+		background: var(--white);
+	}
+
+	.panel-a::before,
+	.panel-b::before {
+		content: "";
+		position: absolute;
+		border-radius: 50%;
+	}
+
+	.panel-a::before {
+		width: 7rem;
+		height: 7rem;
+		background: var(--yellow);
+		top: 12%;
+		right: 10%;
+	}
+
+	.panel-b::before {
+		width: 5.5rem;
+		height: 5.5rem;
+		background: var(--orange);
+		top: 16%;
+		left: 12%;
+	}
+
+	.type-name {
+		position: relative;
+		z-index: 1;
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: clamp(2.6rem, 4vw, 3.3rem);
+		line-height: 0.9;
+		color: var(--red);
+	}
+
+	.city-caption {
+		margin-top: 0.75rem;
+		font-family: var(--font-sans);
+		font-size: 0.75rem;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--red);
+	}
+
+	.carousel-controls {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.65rem;
+		margin-top: 0.9rem;
+	}
+
+	.carousel-controls button {
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 50%;
+		border: 1.5px solid var(--red);
+		background: var(--white);
+		color: var(--red);
+		font-size: 1.2rem;
+		line-height: 1;
+		cursor: pointer;
+	}
+
+	.carousel-controls button:disabled {
+		opacity: 0.35;
+		cursor: not-allowed;
+	}
+
+	@media (max-width: 799px) {
+		.route-head {
+			justify-content: center;
+			text-align: center;
+		}
+
+		.badge {
+			margin-left: 0;
+		}
+
+		.carousel-controls {
+			justify-content: center;
+		}
+	}
+
+	@media (min-width: 800px) {
+		.badge {
+			align-self: center;
+		}
+	}
+</style>

@@ -1,0 +1,92 @@
+---
+import { site } from "../content/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer on-dark">
+	<div class="wrap footer-grid">
+		<a class="wordmark" href="/">Top Bunk<br />Travel</a>
+		<ul class="footer-links">
+			<li><a href={site.instagramUrl}>Instagram</a></li>
+			<li><a href={site.tiktokUrl}>TikTok</a></li>
+			<li><a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></li>
+			<li><a href="/privacy">{site.footer.privacy}</a></li>
+		</ul>
+		<p class="copy">© {year} {site.footer.rights}</p>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		background: var(--black);
+		color: var(--white);
+		padding-block: clamp(2.2rem, 5vw, 3.4rem);
+	}
+
+	.footer-grid {
+		display: grid;
+		gap: 1.1rem;
+	}
+
+	.wordmark {
+		font-size: clamp(2.4rem, 4vw, 3.2rem);
+		justify-self: start;
+	}
+
+	.footer-links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		text-align: center;
+		gap: 0.7rem 1.4rem;
+	}
+
+	.footer-links a {
+		color: var(--white);
+		text-decoration: none;
+		font-size: 0.95rem;
+	}
+
+	.footer-links a:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.copy {
+		font-size: 0.85rem;
+		letter-spacing: 0.04em;
+	}
+
+	@media (max-width: 799px) {
+		.footer-grid {
+			justify-items: center;
+			text-align: center;
+		}
+
+		.wordmark {
+			justify-self: center;
+			text-align: center;
+		}
+	}
+
+	@media (min-width: 800px) {
+		.footer-grid {
+			grid-template-columns: auto 1fr;
+			align-items: center;
+			column-gap: 2rem;
+		}
+
+		.footer-links {
+			justify-content: flex-end;
+			text-align: right;
+		}
+
+		.copy {
+			grid-column: 1 / -1;
+		}
+	}
+</style>

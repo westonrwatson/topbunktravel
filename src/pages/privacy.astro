@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../content/site";
+
+// TODO: Replace this page with a privacy policy reviewed by counsel
+// before collecting real email addresses.
+const page = site.privacy;
+---
+
+<BaseLayout title={`${page.title} | ${site.legalName}`} description={page.description}>
+	<Header />
+	<main id="main" class="privacy">
+		<article class="wrap">
+			<p class="draft">{page.draft}</p>
+			<h1>{page.title}</h1>
+			{
+				page.sections.map((section) => (
+					<section>
+						<h2>{section.heading}</h2>
+						<p>{section.body}</p>
+					</section>
+				))
+			}
+			<p class="back"><a href="/">Back to Top Bunk</a></p>
+		</article>
+	</main>
+	<Footer />
+</BaseLayout>
+
+<style>
+	.privacy {
+		padding-block: clamp(2.5rem, 6vw, 4.5rem);
+	}
+
+	article {
+		display: grid;
+		gap: 1.5rem;
+		max-width: 42rem;
+	}
+
+	.draft {
+		background: var(--yellow);
+		color: var(--black);
+		padding: 0.9rem 1rem;
+		font-size: 0.98rem;
+	}
+
+	h1 {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-weight: 400;
+		font-size: var(--step-h2);
+		line-height: 0.95;
+		color: var(--red);
+	}
+
+	h2 {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-weight: 400;
+		font-size: clamp(1.6rem, 3vw, 2.1rem);
+		margin-bottom: 0.4rem;
+	}
+
+	section {
+		display: grid;
+		gap: 0.35rem;
+	}
+
+	.back {
+		margin-top: 0.5rem;
+	}
+</style>

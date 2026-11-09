@@ -1,0 +1,212 @@
+---
+import { site } from "../content/site";
+import FilmImage from "./FilmImage.astro";
+import juddgabe from "../assets/images/juddgabe.jpg";
+
+// TODO: Referral waitlist — after a successful join, offer a way to move up
+// the list by inviting friends. Hook that in here, using the same email,
+// without blocking the initial signup.
+const endpoint = import.meta.env.PUBLIC_TRAVELER_FORM_ENDPOINT ?? "";
+const form = site.travelerForm;
+---
+
+<section class="section" id="waitlist" aria-labelledby="waitlist-title">
+	<div class="wrap waitlist-layout">
+		<div class="form-wrap">
+		<h2 id="waitlist-title" class="section-title">{form.title}</h2>
+		<form class="signup" novalidate data-endpoint={endpoint} data-form="traveler">
+			<div data-fields>
+				<p class="required-note">{site.forms.requiredNote}</p>
+				<div class="form-grid cols-2">
+					<div class="field span-2">
+						<label class="field-label" for="traveler-email">
+							{form.email} <span class="req" aria-hidden="true">*</span>
+						</label>
+						<input
+							id="traveler-email"
+							name="email"
+							type="email"
+							autocomplete="email"
+							required
+							aria-describedby="traveler-email-error"
+						/>
+						<p id="traveler-email-error" class="field-error" hidden></p>
+					</div>
+
+					<div class="field">
+						<label class="field-label" for="traveler-city">
+							{form.city} <span class="req" aria-hidden="true">*</span>
+						</label>
+						<select id="traveler-city" name="first_city" required aria-describedby="traveler-city-error">
+							<option value="" disabled selected>{form.cityPlaceholder}</option>
+							{form.cities.map((city) => <option value={city}>{city}</option>)}
+						</select>
+						<p id="traveler-city-error" class="field-error" hidden></p>
+					</div>
+
+					<div class="field">
+						<label class="field-label" for="traveler-timing">
+							{form.timing} <span class="req" aria-hidden="true">*</span>
+						</label>
+						<select id="traveler-timing" name="timing" required aria-describedby="traveler-timing-error">
+							<option value="" disabled selected>{form.timingPlaceholder}</option>
+							{form.timings.map((option) => <option value={option.value}>{option.label}</option>)}
+						</select>
+						<p id="traveler-timing-error" class="field-error" hidden></p>
+					</div>
+
+					<fieldset class="choices span-2">
+						<legend class="legend">
+							{form.intentLegend}
+							<span class="hint"> ({form.intentOptional})</span>
+						</legend>
+						{
+							form.intentOptions.map((option) => (
+								<label class="choice">
+									<input type="radio" name="pass_interest" value={option.value} />
+									<span>{option.label}</span>
+								</label>
+							))
+						}
+					</fieldset>
+
+					<div class="field span-2">
+						<label class="check" for="traveler-consent">
+							<input
+								id="traveler-consent"
+								name="consent"
+								type="checkbox"
+								value="yes"
+								required
+								aria-describedby="traveler-consent-error"
+							/>
+							<span>
+								{form.consentLead} <a href="/privacy">{form.consentLink}</a> {form.consentTail}
+								<span class="req" aria-hidden="true">*</span>
+							</span>
+						</label>
+						<p id="traveler-consent-error" class="field-error" hidden></p>
+					</div>
+				</div>
+
+				<p class="hp" aria-hidden="true">
+					<label>
+						Leave this blank
+						<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+					</label>
+				</p>
+
+				<p class="form-alert" data-alert role="alert" hidden></p>
+				<button class="btn btn-red" type="submit">
+					<span data-label>{form.submit}</span>
+				</button>
+			</div>
+			<p class="success" data-success role="status" tabindex="-1" hidden>{form.success}</p>
+		</form>
+		</div>
+		<FilmImage
+			class="waitlist-photo"
+			src={juddgabe}
+			alt="Two travelers on a sunlit waterfront promenade, seen from behind."
+			widths={[480, 720, 960, 1200]}
+			sizes="(min-width: 900px) 40vw, 1px"
+			aspect="2 / 3"
+			objectPosition="center 62%"
+		/>
+	</div>
+</section>
+
+<script>
+	import { bindForm } from "../scripts/form";
+	bindForm(document.querySelector<HTMLFormElement>("[data-form='traveler']"));
+</script>
+
+<style>
+	.waitlist-layout {
+		display: grid;
+		gap: clamp(1.5rem, 3vw, 2.75rem);
+		align-items: start;
+	}
+
+	.waitlist-layout :global(.waitlist-photo) {
+		display: none;
+	}
+
+	.form-wrap {
+		display: grid;
+		gap: 1.5rem;
+		min-width: 0;
+	}
+
+	@media (min-width: 900px) {
+		.waitlist-layout {
+			grid-template-columns: minmax(16rem, 0.85fr) minmax(0, 1.15fr);
+			align-items: stretch;
+		}
+
+		.waitlist-layout :global(.waitlist-photo) {
+			display: block;
+			grid-column: 1;
+			grid-row: 1;
+			height: 100%;
+			aspect-ratio: auto;
+		}
+
+		.form-wrap {
+			grid-column: 2;
+			grid-row: 1;
+		}
+
+		.waitlist-layout .form-grid.cols-2 {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (min-width: 1180px) {
+		.waitlist-layout .form-grid.cols-2 {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.signup,
+	.signup [data-fields] {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.required-note {
+		margin-bottom: 0.35rem;
+	}
+
+	.form-grid {
+		margin-bottom: 0.4rem;
+	}
+
+	/* Orange accents: display type only at 48px and up, black text on orange. */
+	.section-title {
+		color: var(--orange);
+		font-size: clamp(3rem, 6.5vw, 5.6rem);
+	}
+
+	.signup .btn-red {
+		background: var(--orange);
+		border-color: var(--orange);
+		color: var(--black);
+	}
+
+	.signup .btn-red:hover {
+		background: var(--orange);
+		border-color: var(--orange);
+		filter: brightness(0.94);
+	}
+
+	.choice input,
+	.check input {
+		accent-color: var(--orange);
+	}
+
+	.success {
+		color: var(--orange);
+		font-size: clamp(3rem, 5vw, 3.6rem);
+	}
+</style>

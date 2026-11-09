@@ -1,0 +1,87 @@
+---
+import { site } from "../content/site";
+---
+
+<section class="section why" aria-labelledby="why-title">
+	<div class="wrap">
+		<h2 id="why-title" data-reveal>{site.why.title}</h2>
+		<ol>
+			{
+				site.why.items.map((item, index) => (
+					<li data-reveal>
+						<span class="index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+						<h3>{item.title}</h3>
+						<p>{item.body}</p>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</section>
+
+<style>
+	.why {
+		background: var(--yellow);
+		color: var(--black);
+	}
+
+	h2 {
+		margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
+		color: var(--black);
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-weight: 700;
+		font-size: clamp(3rem, 7vw, 5.4rem);
+		line-height: 0.88;
+		letter-spacing: -0.03em;
+	}
+
+	ol {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-top: 1.5px solid var(--black);
+	}
+
+	li {
+		display: grid;
+		gap: 0.35rem 1rem;
+		padding: 1.15rem 0 1.25rem;
+		border-bottom: 1.5px solid var(--black);
+	}
+
+	.index {
+		font-family: var(--font-wordmark);
+		font-size: 1.65rem;
+		line-height: 1;
+	}
+
+	h3 {
+		margin: 0;
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-weight: 700;
+		font-size: clamp(1.7rem, 3vw, 2.5rem);
+		line-height: 1.05;
+	}
+
+	p {
+		margin: 0;
+		max-width: 38rem;
+		font-size: 1.02rem;
+		line-height: 1.45;
+	}
+
+	@media (min-width: 800px) {
+		li {
+			grid-template-columns: 3.5rem minmax(12rem, 0.9fr) minmax(16rem, 1.2fr);
+			align-items: baseline;
+			gap: 1rem 1.75rem;
+			padding-block: 1.45rem;
+		}
+
+		p {
+			max-width: none;
+		}
+	}
+</style>

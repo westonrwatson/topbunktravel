@@ -1,0 +1,43 @@
+---
+import { site } from "../content/site";
+import FilmImage from "./FilmImage.astro";
+import hero from "../assets/images/syd-hostel.png";
+---
+
+<section class="hero" aria-labelledby="hero-title">
+	<div class="wrap-wide hero-grid">
+		<h1 id="hero-title" class="sr-only">Top Bunk Travel</h1>
+		<FilmImage
+			class="hero-photo"
+			src={hero}
+			alt={site.hero.imageAlt}
+			widths={[480, 720, 906]}
+			sizes="(min-width: 900px) 1200px, 100vw"
+			loading="eager"
+			fetchpriority="high"
+			aspect="5 / 4"
+			objectPosition="74% 36%"
+		/>
+	</div>
+</section>
+
+<style>
+	.hero {
+		padding-top: clamp(0.5rem, 2vw, 1.25rem);
+	}
+
+	.hero-grid {
+		display: grid;
+		align-items: end;
+	}
+
+	.hero-grid :global(.hero-photo) {
+		aspect-ratio: 5 / 4;
+	}
+
+	@media (min-width: 900px) {
+		.hero-grid :global(.hero-photo) {
+			aspect-ratio: 16 / 10;
+		}
+	}
+</style>
