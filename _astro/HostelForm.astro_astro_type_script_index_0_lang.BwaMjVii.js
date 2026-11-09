@@ -1,0 +1,1 @@
+import{t as e}from"./form.BH078D7H.js";e(document.querySelector(`[data-form='hostel']`));
