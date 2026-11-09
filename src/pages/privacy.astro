@@ -13,7 +13,6 @@ const page = site.privacy;
 	<Header />
 	<main id="main" class="privacy">
 		<article class="wrap">
-			<p class="draft">{page.draft}</p>
 			<h1>{page.title}</h1>
 			{
 				page.sections.map((section) => (
@@ -37,13 +36,6 @@ const page = site.privacy;
 	article {
 		display: grid;
 		gap: 1.5rem;
-	}
-
-	.draft {
-		background: var(--yellow);
-		color: var(--black);
-		padding: 0.9rem 1rem;
-		font-size: 0.98rem;
 	}
 
 	h1 {

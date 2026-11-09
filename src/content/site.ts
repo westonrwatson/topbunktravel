@@ -1,7 +1,5 @@
 /**
  * All visitor-facing copy lives here.
- * Replace contactEmail and the social URLs before launch.
- * hello@example.com is a stand-in, not a real inbox.
  */
 
 export const site = {
@@ -10,25 +8,25 @@ export const site = {
 	title: "Top Bunk Travel | One pass. Vetted hostels. Your people.",
 	description:
 		"A prepaid pass for vetted hostels in Spain and Portugal. Credits last a year. Join the founding members, or list your hostel.",
-	contactEmail: "hello@example.com",
-	instagramUrl: "https://instagram.com",
-	tiktokUrl: "https://www.tiktok.com",
+	contactEmail: "hello@topbunktravel.com",
+	instagramUrl: "https://www.instagram.com/topbunktravel/",
+	tiktokUrl: "https://www.tiktok.com/@topbunktravel",
 	nav: [
-		{ label: "How it works", href: "/#how-it-works" },
+		{ label: "How It Works", href: "/#how-it-works" },
 		{ label: "Locations", href: "/#locations" },
-		{ label: "For hostels", href: "/#hostels" },
+		{ label: "For Hostels", href: "/#hostels" },
 		{ label: "FAQ", href: "/#faq" },
 	],
 	hero: {
 		imageAlt: "From the top bunk, a traveler lies on the bed below in warm evening light.",
 	},
-	microLabels: ["One Pass", "Curated Hostels", "Budget friendly", "See the world"],
+	microLabels: ["One Pass", "Curated Hostels", "Budget Friendly", "See the World"],
 	how: {
 		title: "How It Works",
 		steps: [
 			"Get your WanderPass, loaded with credits that last 12 months.",
 			"Spend them at any partner hostel. Standard stays cost 1 credit, popular ones up to 3.",
-			"Find a community in the cities you stay. Meet fellow travelers and build relationships that last.",
+			"Meet fellow travelers in the cities you stay, and keep those relationships going after you check out.",
 		],
 	},
 	why: {
@@ -51,14 +49,14 @@ export const site = {
 			},
 			{
 				title: "A community, not a booking",
-				body: "Find a community in the cities you stay. Meet fellow travelers and build relationships, not just get a confirmation email.",
+				body: "You get more than a confirmation email. The people you meet on the trip are part of the stay.",
 				shape: "arch",
 			},
 		],
 	},
 	route: {
 		title: "Locations",
-		subline: "the cities you can stay in",
+		subline: "The cities you can stay in",
 		badge: "More coming soon",
 		captionNote: "Where you can stay",
 		cities: [
@@ -96,7 +94,7 @@ export const site = {
 	},
 	founding: {
 		title: "The first 500 to join our waitlist will get a bonus credit, a free t-shirt, and first access to the WanderPass.",
-		note: "Final prices may change.",
+		note: "We’ll share the price before anything goes on sale.",
 	},
 	travelerForm: {
 		title: "Join the Waitlist",
@@ -112,7 +110,7 @@ export const site = {
 			{ value: "6-12-months", label: "6–12 months" },
 			{ value: "dreaming", label: "Just dreaming" },
 		],
-		intentLegend: "Would you buy a 10-credit pass for around $149?",
+		intentLegend: "Would you buy a WanderPass when it goes on sale?",
 		intentOptional: "Optional",
 		intentOptions: [
 			{ value: "yes", label: "Yes" },
@@ -122,8 +120,8 @@ export const site = {
 		consentLead: "I agree to the",
 		consentLink: "privacy policy",
 		consentTail: "and to hear from Top Bunk about the pass.",
-		submit: "Join the waitlist",
-		success: "You're on the list. We'll save you a top bunk.",
+		submit: "Join the Waitlist",
+		success: "You’re on the list. We’ll save you a top bunk.",
 	},
 	hostels: {
 		title: "For Hostels",
@@ -160,7 +158,7 @@ export const site = {
 			},
 			{
 				q: "How much will it cost?",
-				a: "Final prices may change, and we’ll tell you before anything goes on sale.",
+				a: "We haven’t set the final price yet. Founding members hear it first, before anything goes on sale.",
 			},
 			{
 				q: "What’s a credit?",
@@ -182,11 +180,10 @@ export const site = {
 	},
 	forms: {
 		sending: "Sending…",
-		missingEndpoint:
-			"This form isn’t connected yet. Add the form endpoint in your environment settings.",
+		missingEndpoint: "We can’t take this just yet. Please try again soon.",
 		genericError: "Something went wrong on our side. Please try again in a moment.",
 		required: "This field is required.",
-		email: "Enter an email address like you@example.com.",
+		email: "Enter an email address like name@email.com.",
 		consent: "Please agree so we can write to you.",
 		url: "Enter a website, like yourhostel.com.",
 		requiredNote: "Fields marked * are required.",
@@ -194,7 +191,6 @@ export const site = {
 	privacy: {
 		title: "Privacy policy",
 		description: "How Top Bunk Travel handles the email addresses collected on this site.",
-		draft: "This is a placeholder. Replace it with a reviewed privacy policy before you collect real addresses.",
 		sections: [
 			{
 				heading: "What we collect",
@@ -210,7 +206,7 @@ export const site = {
 			},
 			{
 				heading: "Contact",
-				body: "Questions about your information can go to the contact address in the footer. Swap this page for a policy your counsel has reviewed before the forms go live.",
+				body: "Questions about your information can go to hello@topbunktravel.com.",
 			},
 		],
 	},

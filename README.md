@@ -18,11 +18,11 @@ The dev server runs at [http://localhost:4321](http://localhost:4321).
 
 All visitor-facing text is in [`src/content/site.ts`](src/content/site.ts): headlines, navigation, FAQ, form labels, and the footer.
 
-Before launch, replace these stand-ins in that file:
+Confirm these before launch, in that file:
 
-- `contactEmail` (currently `hello@example.com`, which is not a real inbox)
-- `instagramUrl`
-- `tiktokUrl`
+- `contactEmail` (`hello@topbunktravel.com`)
+- `instagramUrl` (`https://www.instagram.com/topbunktravel/`)
+- `tiktokUrl` (`https://www.tiktok.com/@topbunktravel`)
 
 Canonical and social links use `https://topbunktravel.westonwatson.com`. Set `PUBLIC_SITE_URL` in `.env` only if the site moves, with no trailing slash.
 
