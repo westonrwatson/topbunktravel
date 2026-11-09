@@ -20,7 +20,7 @@ All visitor-facing text is in [`src/content/site.ts`](src/content/site.ts): head
 
 Confirm these before launch, in that file:
 
-- `contactEmail` (`hello@topbunktravel.com`)
+- `contactEmail` (`topbunktravel@gmail.com`)
 - `instagramUrl` (`https://www.instagram.com/topbunktravel/`)
 - `tiktokUrl` (`https://www.tiktok.com/@topbunktravel`)
 

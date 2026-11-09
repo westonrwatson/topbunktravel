@@ -8,7 +8,7 @@ export const site = {
 	title: "Top Bunk Travel | One pass. Vetted hostels. Your people.",
 	description:
 		"A prepaid pass for vetted hostels in Spain and Portugal. Credits last a year. Join the founding members, or list your hostel.",
-	contactEmail: "hello@topbunktravel.com",
+	contactEmail: "topbunktravel@gmail.com",
 	instagramUrl: "https://www.instagram.com/topbunktravel/",
 	tiktokUrl: "https://www.tiktok.com/@topbunktravel",
 	nav: [
@@ -206,7 +206,7 @@ export const site = {
 			},
 			{
 				heading: "Contact",
-				body: "Questions about your information can go to hello@topbunktravel.com.",
+				body: "Questions about your information can go to topbunktravel@gmail.com.",
 			},
 		],
 	},
