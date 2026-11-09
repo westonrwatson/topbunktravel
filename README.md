@@ -24,7 +24,7 @@ Before launch, replace these stand-ins in that file:
 - `instagramUrl`
 - `tiktokUrl`
 
-Set `PUBLIC_SITE_URL` in `.env` to the real domain, with no trailing slash, so canonical and social links are correct. Until you do, they point at `https://example.com`.
+Canonical and social links use `https://topbunktravel.westonwatson.com`. Set `PUBLIC_SITE_URL` in `.env` only if the site moves, with no trailing slash.
 
 ## Form endpoints
 
@@ -67,15 +67,18 @@ The city cards other than Lisbon are stock photos under the [Unsplash License](h
 
 `src/pages/privacy.astro` is placeholder text. Replace it with a reviewed privacy policy before collecting real addresses. There is a TODO at the top of that file.
 
-## Deploy on Vercel
+## Deploy on GitHub Pages
 
-The site is a static build. No adapter.
+The site is a static build. `.github/workflows/deploy.yml` builds it on every push to `main` and publishes `dist/`. `public/CNAME` sets the custom domain to `topbunktravel.westonwatson.com`.
 
-1. Push the repository and import it in Vercel. Framework preset: Astro.
-2. Add the same variables from `.env.example` in the project settings: `PUBLIC_SITE_URL`, `PUBLIC_TRAVELER_FORM_ENDPOINT`, and `PUBLIC_HOSTEL_FORM_ENDPOINT`.
-3. Deploy. Vercel runs `npm run build` and publishes `dist/`.
+One-time setup in the GitHub repo:
 
-`PUBLIC_` variables are baked in at build time. Change one, then redeploy.
+1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**.
+2. **Settings → Pages → Custom domain:** `topbunktravel.westonwatson.com`, then enable **Enforce HTTPS** once the certificate is ready.
+3. **Settings → Secrets and variables → Actions → Variables:** add `PUBLIC_TRAVELER_FORM_ENDPOINT` and `PUBLIC_HOSTEL_FORM_ENDPOINT`. Use the Formspree URLs.
+4. DNS: add a `CNAME` record for `topbunktravel` on `westonwatson.com` pointing to `westonrwatson.github.io`.
+
+`PUBLIC_` values are baked in at build time. Change one, then push or re-run the workflow.
 
 ## Scripts
 
