@@ -17,7 +17,6 @@
 
 	--font-wordmark: "Gasoek One", "Arial Black", Impact, sans-serif;
 	--font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	--font-serif: "Averia Serif Libre", Georgia, "Times New Roman", serif;
 	--font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 	--gutter: clamp(1.15rem, 3.6vw, 3.25rem);
@@ -29,7 +28,16 @@
 	--step-display: clamp(3.5rem, 12vw, 10rem);
 	--step-hero: clamp(1.6rem, 7vw, 6.5rem);
 	--step-h2: clamp(2.75rem, 6.5vw, 5.6rem);
-	--body: clamp(1rem, 0.35vw + 0.95rem, 1.125rem);
+	/* Helvetica type scale: three sizes only. */
+	--text-sm: 0.85rem;
+	--text-md: 1.05rem;
+	--text-lg: 1.4rem;
+}
+
+@media (max-width: 799px) {
+	:root {
+		--text-lg: 1.15rem;
+	}
 }
 
 *,
@@ -48,7 +56,8 @@ body {
 	background: var(--white);
 	color: var(--black);
 	font-family: var(--font-sans);
-	font-size: var(--body);
+	text-transform: uppercase;
+	font-size: var(--text-md);
 	font-weight: 400;
 	line-height: 1.6;
 	text-rendering: optimizeLegibility;
@@ -66,6 +75,19 @@ select,
 textarea {
 	font: inherit;
 	color: inherit;
+}
+
+button,
+.btn {
+	text-transform: uppercase;
+}
+
+/* Headings and the wordmark keep their own case. */
+h1,
+h2,
+h3,
+.wordmark {
+	text-transform: none;
 }
 
 h1,
@@ -120,11 +142,7 @@ a {
 }
 
 .wrap,
-.wrap-wide {
-	width: min(100% - var(--gutter) * 2, var(--wide));
-	margin-inline: auto;
-}
-
+.wrap-wide,
 .edge {
 	width: calc(100% - var(--edge) * 2);
 	margin-inline: auto;
@@ -137,6 +155,7 @@ a {
 	line-height: 1;
 	font-weight: 400;
 	font-style: normal;
+	letter-spacing: -0.035em;
 }
 
 .section {
@@ -144,17 +163,17 @@ a {
 }
 
 .section-title {
-	font-family: var(--font-serif);
-	font-style: italic;
+	font-family: var(--font-wordmark);
+	font-style: normal;
 	font-weight: 400;
 	font-size: var(--step-h2);
 	line-height: 0.9;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.035em;
 	color: var(--red);
 }
 
 .kicker {
-	font-size: 0.75rem;
+	font-size: var(--text-sm);
 	font-weight: 500;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
@@ -167,7 +186,7 @@ a {
 	justify-content: center;
 	min-height: 48px;
 	padding: 0.75rem 1.3rem;
-	border-radius: 2px;
+	border-radius: var(--radius);
 	border: 1.5px solid transparent;
 	text-decoration: none;
 	cursor: pointer;
@@ -282,13 +301,13 @@ a {
 
 .field-label,
 .legend {
-	font-size: 0.95rem;
+	font-size: var(--text-md);
 	font-weight: 500;
 }
 
 .hint,
 .required-note {
-	font-size: 0.85rem;
+	font-size: var(--text-sm);
 }
 
 .req {
@@ -305,7 +324,7 @@ select {
 	min-height: 48px;
 	padding: 0.75rem 0.85rem;
 	border: 1px solid var(--black);
-	border-radius: 2px;
+	border-radius: var(--radius);
 	background: var(--white);
 	color: var(--black);
 }
@@ -347,7 +366,11 @@ select[aria-invalid="true"] {
 	display: flex;
 	align-items: flex-start;
 	gap: 0.7rem;
-	font-size: 0.98rem;
+	font-size: var(--text-md);
+}
+
+.check {
+	font-size: var(--text-sm);
 }
 
 .choice input,
@@ -359,10 +382,41 @@ select[aria-invalid="true"] {
 	flex: none;
 }
 
+.check input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	display: grid;
+	place-content: center;
+	margin: 0.2rem 0 0;
+	border: 1.5px solid var(--black);
+	border-radius: 50%;
+	background: var(--white);
+	cursor: pointer;
+}
+
+.check input[type="checkbox"]::before {
+	content: "";
+	width: 0.55rem;
+	height: 0.55rem;
+	border-radius: 50%;
+	background: var(--red);
+	transform: scale(0);
+	transition: transform 0.12s ease;
+}
+
+.check input[type="checkbox"]:checked::before {
+	transform: scale(1);
+}
+
+.check input[type="checkbox"]:focus-visible {
+	outline: 2px solid var(--red);
+	outline-offset: 3px;
+}
+
 .field-error {
 	margin: 0;
 	color: var(--red);
-	font-size: 0.88rem;
+	font-size: var(--text-sm);
 	line-height: 1.4;
 }
 
@@ -371,13 +425,13 @@ select[aria-invalid="true"] {
 	padding: 0.75rem 0.85rem;
 	background: var(--yellow);
 	color: var(--black);
-	font-size: 0.95rem;
+	font-size: var(--text-md);
 }
 
 .success {
-	font-family: var(--font-serif);
-	font-style: italic;
-	font-size: clamp(2rem, 4vw, 3.2rem);
+	font-family: var(--font-sans);
+	font-style: normal;
+	font-size: var(--text-lg);
 	line-height: 1.05;
 	color: var(--red);
 }
@@ -387,7 +441,7 @@ select[aria-invalid="true"] {
 	align-items: center;
 	background: var(--yellow);
 	color: var(--black);
-	font-size: 0.72rem;
+	font-size: var(--text-sm);
 	font-weight: 500;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;

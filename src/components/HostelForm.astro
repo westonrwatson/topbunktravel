@@ -5,7 +5,7 @@ const endpoint = import.meta.env.PUBLIC_HOSTEL_FORM_ENDPOINT ?? "";
 const copy = site.hostels;
 ---
 
-<form class="hostel-form on-red" novalidate data-endpoint={endpoint} data-form="hostel">
+<form class="hostel-form" novalidate data-endpoint={endpoint} data-form="hostel">
 	<div data-fields>
 		<div class="form-grid cols-2">
 			<div class="field">
@@ -52,7 +52,6 @@ const copy = site.hostels;
 					</span>
 				</label>
 				<p id="hostel-consent-error" class="field-error" hidden></p>
-				<p class="required-note">{site.forms.requiredNote}</p>
 			</div>
 		</div>
 
@@ -64,11 +63,11 @@ const copy = site.hostels;
 		</p>
 
 		<p class="form-alert" data-alert role="alert" hidden></p>
-		<button class="btn btn-black" type="submit">
+		<button class="btn btn-red" type="submit">
 			<span data-label>{copy.submit}</span>
 		</button>
 	</div>
-	<p class="success hostel-success" data-success role="status" tabindex="-1" hidden>{copy.success}</p>
+	<p class="success" data-success role="status" tabindex="-1" hidden>{copy.success}</p>
 </form>
 
 <script>
@@ -81,37 +80,6 @@ const copy = site.hostels;
 	.hostel-form [data-fields] {
 		display: grid;
 		gap: 1rem;
-	}
-
-	.field-label,
-	.legend,
-	.check,
-	.required-note,
-	.hint {
-		color: var(--white);
-	}
-
-	.req {
-		color: var(--white);
-	}
-
-	.check a {
-		color: var(--white);
-	}
-
-	.check input {
-		accent-color: var(--black);
-	}
-
-	.field-error {
-		color: var(--black);
-		background: var(--white);
-		padding: 0.25rem 0.45rem;
-		width: fit-content;
-	}
-
-	.hostel-success {
-		color: var(--white);
 	}
 
 	.form-grid {

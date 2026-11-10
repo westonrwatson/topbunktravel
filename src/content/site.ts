@@ -15,19 +15,20 @@ export const site = {
 		{ label: "How It Works", href: "/#how-it-works" },
 		{ label: "Locations", href: "/#locations" },
 		{ label: "For Hostels", href: "/#hostels" },
-		{ label: "FAQ", href: "/#faq" },
+		{ label: "Join Waitlist", href: "/#waitlist" },
 	],
 	hero: {
 		imageAlt: "From the top bunk, a traveler lies on the bed below in warm evening light.",
 	},
-	microLabels: ["One Pass", "Curated Hostels", "Budget Friendly", "See the World"],
+	microLabels: ["Curated Hostels", "One Pass", "Budget Friendly", "See the World"],
 	how: {
 		title: "How It Works",
-		steps: [
-			"Get your WanderPass, loaded with credits that last 12 months.",
-			"Spend them at any partner hostel. Standard stays cost 1 credit, popular ones up to 3.",
-			"Meet fellow travelers in the cities you stay, and keep those relationships going after you check out.",
+		lines: [
+			"We know how expensive traveling can be :(",
+			"Our goal is to help you explore the world without breaking the bank.",
+			"For $150 you’ll get 4–10 nights at any of our personally vetted hostels across the globe.",
 		],
+		imageAlt: "A chestnut horse running.",
 	},
 	why: {
 		title: "Why Top Bunk",
@@ -55,9 +56,8 @@ export const site = {
 		],
 	},
 	route: {
-		title: "Locations",
+		title: "Starting Locations",
 		subline: "The cities you can stay in",
-		badge: "More coming soon",
 		captionNote: "Where you can stay",
 		cities: [
 			{
@@ -93,11 +93,12 @@ export const site = {
 		],
 	},
 	founding: {
-		title: "The first 500 to join our waitlist will get a bonus credit, a free t-shirt, and first access to the WanderPass.",
+		title: "The first 500 to join our waitlist will get a bonus credit, a free t-shirt, and first access to the pass.",
 		note: "We’ll share the price before anything goes on sale.",
 	},
 	travelerForm: {
 		title: "Join the Waitlist",
+		intro: ["Tell us where you’d go first and when.", "We’ll write to you before the pass goes on sale."],
 		email: "Email",
 		city: "Where would you go first?",
 		cityPlaceholder: "Choose a city",
@@ -110,13 +111,6 @@ export const site = {
 			{ value: "6-12-months", label: "6–12 months" },
 			{ value: "dreaming", label: "Just dreaming" },
 		],
-		intentLegend: "Would you buy a WanderPass when it goes on sale?",
-		intentOptional: "Optional",
-		intentOptions: [
-			{ value: "yes", label: "Yes" },
-			{ value: "maybe", label: "Maybe" },
-			{ value: "no", label: "No" },
-		],
 		consentLead: "I agree to the",
 		consentLink: "privacy policy",
 		consentTail: "and to hear from Top Bunk about the pass.",
@@ -125,7 +119,7 @@ export const site = {
 	},
 	hostels: {
 		title: "For Hostels",
-		intro: "Become a founding partner. Here’s what you get:",
+		intro: ["Become a founding partner.", "Here’s what you get:"],
 		benefits: [
 			"Free professional photos and video.",
 			"Featured in our city guides and social channels.",
@@ -186,7 +180,6 @@ export const site = {
 		email: "Enter an email address like name@email.com.",
 		consent: "Please agree so we can write to you.",
 		url: "Enter a website, like yourhostel.com.",
-		requiredNote: "Fields marked * are required.",
 	},
 	privacy: {
 		title: "Privacy policy",

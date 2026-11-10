@@ -1,6 +1,6 @@
 # Top Bunk Travel
 
-A one-page coming-soon site for the WanderPass. Static Astro, plain CSS, and a little vanilla JavaScript for the menu, city carousel, FAQ, and forms.
+A one-page coming-soon site for Top Bunk Travel. Static Astro, plain CSS, and a little vanilla JavaScript for the menu, city carousel, FAQ, and forms.
 
 ## Setup
 

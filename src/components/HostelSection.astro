@@ -5,14 +5,23 @@ import HostelForm from "./HostelForm.astro";
 
 <section class="hostel on-red" id="hostels" aria-labelledby="hostel-title">
 	<div class="wrap hostel-layout">
-		<div data-reveal>
+		<div class="hostel-copy" data-reveal>
 			<h2 id="hostel-title">{site.hostels.title}</h2>
-			<p class="intro">{site.hostels.intro}</p>
-			<ul class="benefits">
-				{site.hostels.benefits.map((item) => <li>{item}</li>)}
-			</ul>
+			<p class="intro">
+				{site.hostels.intro.map((line) => <span class="intro-line">{line}</span>)}
+			</p>
+			<ol class="benefits">
+				{
+					site.hostels.benefits.map((item, index) => (
+						<li>
+							<span class="num">{String(index + 1).padStart(2, "0")}</span>
+							<span>{item}</span>
+						</li>
+					))
+				}
+			</ol>
 		</div>
-		<div data-reveal>
+		<div class="hostel-card" data-reveal>
 			<HostelForm />
 		</div>
 	</div>
@@ -25,44 +34,96 @@ import HostelForm from "./HostelForm.astro";
 		padding-block: var(--section);
 	}
 
+	.hostel-copy {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
 	.hostel-layout {
 		display: grid;
 		gap: 2.75rem;
+		align-items: start;
 	}
 
 	h2 {
-		font-family: var(--font-serif);
-		font-style: italic;
+		font-family: var(--font-wordmark);
+		font-style: normal;
 		font-weight: 400;
 		font-size: var(--step-h2);
 		line-height: 0.9;
+		letter-spacing: -0.035em;
 		color: var(--white);
+	}
+
+	.intro-line {
+		display: block;
 	}
 
 	.intro {
 		margin-top: 1rem;
-		max-width: 34rem;
-		font-size: 1.05rem;
+		font-size: var(--text-lg);
+		line-height: 1.45;
+		text-transform: uppercase;
 	}
 
 	.benefits {
 		list-style: none;
-		margin: 1.6rem 0 0;
+		margin: 1.5rem 0 0;
 		padding: 0;
-		display: grid;
-		gap: 0.95rem;
 	}
 
 	.benefits li {
-		padding-left: 0.95rem;
-		border-left: 3px solid var(--yellow);
+		display: grid;
+		grid-template-columns: 2.4rem 1fr;
+		gap: 0.85rem;
+		align-items: baseline;
+		padding-block: 0.85rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.35);
+		font-size: var(--text-md);
+		line-height: 1.35;
+	}
+
+	.benefits li:last-child {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+	}
+
+	.num {
+		font-weight: 500;
+		letter-spacing: 0.04em;
+	}
+
+	.hostel-card {
+		background: var(--white);
+		color: var(--black);
+		border-radius: var(--radius);
+		padding: clamp(1.25rem, 2.5vw, 2rem);
+	}
+
+	@media (max-width: 959px) {
+		h2,
+		.intro {
+			text-align: center;
+		}
 	}
 
 	@media (min-width: 960px) {
 		.hostel-layout {
-			grid-template-columns: 0.9fr 1.1fr;
-			gap: 4rem;
-			align-items: start;
+			grid-template-columns: minmax(0, 0.8fr) minmax(22rem, 1.2fr);
+			gap: 3rem;
+			align-items: stretch;
+		}
+
+		.benefits {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 0;
+		}
+
+		.benefits li {
+			flex: 1;
+			align-items: center;
 		}
 	}
 </style>

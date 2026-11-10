@@ -1,51 +1,77 @@
 ---
+import { Image } from "astro:assets";
 import { site } from "../content/site";
+import lot from "../assets/images/how-lot-duotone.jpg";
 ---
 
-<section class="section" id="how-it-works" aria-labelledby="how-title">
-	<div class="wrap">
-		<h2 id="how-title" class="section-title" data-reveal>{site.how.title}</h2>
-		<ol class="steps">
-			{
-				site.how.steps.map((step, index) => (
-					<li data-reveal>
-						<span class="num" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-						<p>{step}</p>
-					</li>
-				))
-			}
-		</ol>
+<section class="section how" id="how-it-works" aria-labelledby="how-title">
+	<div class="edge">
+		<h2 id="how-title" class="sr-only">{site.how.title}</h2>
+		<p class="how-copy">
+			{site.how.lines.map((line) => <span class="how-line">{line}</span>)}
+		</p>
+		<div class="how-visual">
+			<Image
+				src={lot}
+				alt="A red and black silhouette of parked vans, signs, and a plane taking off."
+				widths={[480, 800, 993]}
+				sizes="100vw"
+			/>
+		</div>
 	</div>
 </section>
 
 <style>
-	.steps {
-		list-style: none;
-		margin: clamp(1.75rem, 4vw, 2.75rem) 0 0;
-		padding: 0;
-		display: grid;
-		gap: 2rem;
+	.how {
+		position: relative;
+		overflow: hidden;
+		background: var(--red);
+		color: var(--white);
+		padding-block: clamp(1.5rem, 3vw, 2.25rem) clamp(2.75rem, 8vw, 4.5rem);
+		min-height: 58svh;
+		display: flex;
+		align-items: flex-start;
 	}
 
-	.num {
+	.how-copy {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-lg);
+		font-weight: 400;
+		line-height: 1.15;
+		text-align: left;
+		text-transform: uppercase;
+	}
+
+	.how-line {
 		display: block;
-		color: var(--red);
-		font-family: var(--font-display);
-		font-weight: 700;
-		font-size: clamp(3.2rem, 6vw, 4.75rem);
-		line-height: 0.85;
-		margin-bottom: 0.7rem;
-	}
-
-	.steps p {
-		max-width: 28rem;
-		font-size: 1.05rem;
 	}
 
 	@media (min-width: 800px) {
-		.steps {
-			grid-template-columns: repeat(3, 1fr);
-			gap: 2rem;
+		.how {
+			padding-bottom: calc(var(--section) * 1.6);
+			min-height: min(78svh, 720px);
 		}
+
+		.how-copy {
+			width: 66.667%;
+		}
+	}
+
+	.how-visual {
+		position: absolute;
+		inset: 0;
+		margin: 0;
+		pointer-events: none;
+	}
+
+	.how-visual :global(img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
 	}
 </style>

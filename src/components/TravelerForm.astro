@@ -13,7 +13,12 @@ const form = site.travelerForm;
 <section class="section" id="waitlist" aria-labelledby="waitlist-title">
 	<div class="wrap waitlist-layout">
 		<div class="form-wrap">
-		<h2 id="waitlist-title" class="section-title">{form.title}</h2>
+		<div class="form-head">
+			<h2 id="waitlist-title" class="section-title">{form.title}</h2>
+			<p class="form-intro">
+				{form.intro.map((line) => <span class="intro-line">{line}</span>)}
+			</p>
+		</div>
 		<form class="signup" novalidate data-endpoint={endpoint} data-form="traveler">
 			<div data-fields>
 				<div class="form-grid cols-2">
@@ -54,21 +59,6 @@ const form = site.travelerForm;
 						<p id="traveler-timing-error" class="field-error" hidden></p>
 					</div>
 
-					<fieldset class="choices span-2">
-						<legend class="legend">
-							{form.intentLegend}
-							<span class="hint"> ({form.intentOptional})</span>
-						</legend>
-						{
-							form.intentOptions.map((option) => (
-								<label class="choice">
-									<input type="radio" name="pass_interest" value={option.value} />
-									<span>{option.label}</span>
-								</label>
-							))
-						}
-					</fieldset>
-
 					<div class="field span-2">
 						<label class="check" for="traveler-consent">
 							<input
@@ -85,7 +75,6 @@ const form = site.travelerForm;
 							</span>
 						</label>
 						<p id="traveler-consent-error" class="field-error" hidden></p>
-						<p class="required-note">{site.forms.requiredNote}</p>
 					</div>
 				</div>
 
@@ -138,22 +127,44 @@ const form = site.travelerForm;
 		min-width: 0;
 	}
 
+	.form-head {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.intro-line {
+		display: block;
+	}
+
+	.form-intro {
+		max-width: 46rem;
+		font-size: var(--text-lg);
+		line-height: 1.45;
+	}
+
+	@media (max-width: 899px) {
+		.form-head {
+			justify-items: center;
+			text-align: center;
+		}
+	}
+
 	@media (min-width: 900px) {
 		.waitlist-layout {
-			grid-template-columns: minmax(16rem, 0.85fr) minmax(0, 1.15fr);
+			grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
 			align-items: stretch;
 		}
 
 		.waitlist-layout :global(.waitlist-photo) {
 			display: block;
-			grid-column: 1;
+			grid-column: 2;
 			grid-row: 1;
 			height: 100%;
 			aspect-ratio: auto;
 		}
 
 		.form-wrap {
-			grid-column: 2;
+			grid-column: 1;
 			grid-row: 1;
 		}
 
@@ -191,7 +202,7 @@ const form = site.travelerForm;
 	.signup .btn-red {
 		background: var(--orange);
 		border-color: var(--orange);
-		color: var(--black);
+		color: var(--white);
 	}
 
 	.signup .btn-red:hover {
@@ -207,6 +218,6 @@ const form = site.travelerForm;
 
 	.success {
 		color: var(--orange);
-		font-size: clamp(3rem, 5vw, 3.6rem);
+		font-size: var(--text-lg);
 	}
 </style>

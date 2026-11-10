@@ -4,34 +4,51 @@ import { site } from "../content/site";
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer on-dark">
-	<div class="wrap footer-grid">
-		<a class="wordmark" href="/">Top Bunk<br />Travel</a>
-		<ul class="footer-links">
-			<li><a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a></li>
-			<li><a href={site.tiktokUrl} target="_blank" rel="noopener noreferrer">TikTok</a></li>
-			<li><a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></li>
-			<li><a href="/privacy">{site.footer.privacy}</a></li>
-		</ul>
-		<p class="copy">© {year} {site.footer.rights}</p>
+<footer class="site-footer">
+	<div class="wrap footer">
+		<a class="wordmark" href="/">Top Bunk Travel</a>
+		<div class="footer-bar">
+			<ul class="footer-links">
+				<li><a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a></li>
+				<li><a href={site.tiktokUrl} target="_blank" rel="noopener noreferrer">TikTok</a></li>
+				<li><a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></li>
+				<li><a href="/privacy">{site.footer.privacy}</a></li>
+			</ul>
+			<p class="copy">© {year} {site.footer.rights}</p>
+		</div>
 	</div>
 </footer>
 
 <style>
 	.site-footer {
-		background: var(--black);
-		color: var(--white);
-		padding-block: clamp(2.2rem, 5vw, 3.4rem);
+		background: var(--white);
+		padding: clamp(1rem, 2.5vw, 1.5rem) 0;
 	}
 
-	.footer-grid {
+	.footer {
+		container-type: inline-size;
 		display: grid;
-		gap: 1.1rem;
+		gap: clamp(1.25rem, 3vw, 2rem);
+		background: var(--black);
+		color: var(--white);
+		border-radius: var(--radius);
+		padding: clamp(1.15rem, 2.4vw, 1.85rem);
 	}
 
 	.wordmark {
-		font-size: clamp(2.4rem, 4vw, 3.2rem);
-		justify-self: start;
+		display: block;
+		width: 100%;
+		color: var(--yellow);
+		font-size: clamp(1.7rem, 7.6cqi, 7.5rem);
+		line-height: 0.82;
+		white-space: nowrap;
+	}
+
+	.footer-bar {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.85rem;
 	}
 
 	.footer-links {
@@ -39,16 +56,16 @@ const year = new Date().getFullYear();
 		margin: 0;
 		padding: 0;
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		text-align: center;
-		gap: 0.7rem 1.4rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.55rem;
 	}
 
 	.footer-links a {
 		color: var(--white);
 		text-decoration: none;
-		font-size: 0.95rem;
+		font-size: var(--text-md);
+		text-transform: uppercase;
 	}
 
 	.footer-links a:hover {
@@ -57,36 +74,47 @@ const year = new Date().getFullYear();
 	}
 
 	.copy {
-		font-size: 0.85rem;
+		margin: 0;
+		font-size: var(--text-sm);
 		letter-spacing: 0.04em;
+		text-transform: uppercase;
 	}
 
 	@media (max-width: 799px) {
-		.footer-grid {
-			justify-items: center;
+		.footer {
 			text-align: center;
 		}
 
 		.wordmark {
-			justify-self: center;
 			text-align: center;
+			font-size: clamp(2.25rem, 9.8cqi, 3.6rem);
+		}
+
+		.footer-bar {
+			align-items: center;
+		}
+
+		.footer-links {
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			gap: 0.6rem 1.4rem;
 		}
 	}
 
 	@media (min-width: 800px) {
-		.footer-grid {
-			grid-template-columns: auto 1fr;
-			align-items: center;
-			column-gap: 2rem;
+		.footer-bar {
+			flex-direction: row;
+			align-items: baseline;
+			justify-content: space-between;
+			gap: 2rem;
 		}
 
 		.footer-links {
-			justify-content: flex-end;
-			text-align: right;
-		}
-
-		.copy {
-			grid-column: 1 / -1;
+			flex-direction: row;
+			align-items: baseline;
+			gap: clamp(1.25rem, 3vw, 2.75rem);
 		}
 	}
 </style>
