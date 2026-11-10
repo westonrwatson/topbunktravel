@@ -8,6 +8,8 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+When you create a commit, also run `npm run deploy` so the live site updates with it.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
