@@ -26,7 +26,8 @@ export const site = {
 		lines: [
 			"We know how expensive traveling can be :(",
 			"Our goal is to help you explore the world without breaking the bank.",
-			"For $150 you’ll get 4–10 nights at any of our personally vetted hostels across the globe.",
+			"For $150 you’ll get 4–10 nights at any of our personally vetted hostels across the globe at anytime for a whole year.",
+			"And that is just our base pass!",
 		],
 		imageAlt: "A chestnut horse running.",
 	},
