@@ -1,0 +1,1 @@
+import{t as e}from"./form.CMmgkVB5.js";e(document.querySelector(`[data-form='hostel']`));
