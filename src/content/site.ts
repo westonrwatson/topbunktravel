@@ -26,8 +26,7 @@ export const site = {
 		lines: [
 			"We know how expensive traveling can be :(",
 			"Our goal is to help you explore the world without breaking the bank.",
-			"For $150 you’ll get 4–10 nights at any of our personally vetted hostels across the globe.",
-			"Book those nights for anytime within a year.",
+			"For $150 you’ll get 4–10 nights at any of our personally vetted hostels across the globe. Book those nights for anytime within a year.",
 			"And that is just our base pass!",
 		],
 		imageAlt: "A chestnut horse running.",
@@ -100,7 +99,7 @@ export const site = {
 	},
 	travelerForm: {
 		title: "Join the Waitlist",
-		intro: ["Tell us where you’d go first and when.", "We’ll write to you before the pass goes on sale."],
+		intro: "Tell us where you’d go first and when. We’ll write to you before the pass goes on sale.",
 		email: "Email",
 		city: "Where would you go first?",
 		cityPlaceholder: "Choose a city",
