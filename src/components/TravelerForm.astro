@@ -33,7 +33,13 @@ const thanks = form.thanks;
 				<h2 id="waitlist-title" class="section-title">{form.title}</h2>
 				<p class="form-intro">{form.intro}</p>
 			</div>
-			<form class="signup" novalidate data-endpoint={endpoint} data-form="traveler">
+			<form
+				class="signup"
+				novalidate
+				data-endpoint={endpoint}
+				data-form="traveler"
+				data-saved-label={site.forms.spotSaved}
+			>
 				<div data-fields>
 					<div class="form-grid">
 						<div class="field">

@@ -94,6 +94,16 @@ function payload(form: HTMLFormElement): Record<string, string> {
 }
 
 function finish(form: HTMLFormElement, onSuccess?: (form: HTMLFormElement) => void): void {
+	const button = form.querySelector<HTMLButtonElement>("[type='submit']");
+	const label = button?.querySelector<HTMLElement>("[data-label]");
+	const savedLabel = form.dataset.savedLabel?.trim();
+	if (savedLabel) {
+		if (label) label.textContent = savedLabel;
+		if (button) button.disabled = true;
+	} else if (button) {
+		button.disabled = false;
+	}
+
 	if (onSuccess) onSuccess(form);
 	else showSuccess(form);
 }
