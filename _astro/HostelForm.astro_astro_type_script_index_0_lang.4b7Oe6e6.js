@@ -1,1 +1,0 @@
-import{t as e}from"./form.DOyLMBl6.js";e(document.querySelector(`[data-form='hostel']`));
