@@ -93,19 +93,37 @@ function payload(form: HTMLFormElement): Record<string, string> {
 	return body;
 }
 
-function finish(form: HTMLFormElement, onSuccess?: (form: HTMLFormElement) => void): void {
-	const button = form.querySelector<HTMLButtonElement>("[type='submit']");
-	const label = button?.querySelector<HTMLElement>("[data-label]");
-	const savedLabel = form.dataset.savedLabel?.trim();
-	if (savedLabel) {
-		if (label) label.textContent = savedLabel;
-		if (button) button.disabled = true;
-	} else if (button) {
-		button.disabled = false;
-	}
+export function applySavedSubmitState(form: HTMLFormElement): boolean {
+	const savedLabel = form.getAttribute("data-saved-label")?.trim();
+	if (!savedLabel) return false;
 
-	if (onSuccess) onSuccess(form);
-	else showSuccess(form);
+	const button =
+		form.querySelector<HTMLButtonElement>("[data-signup-submit]") ??
+		form.querySelector<HTMLButtonElement>("[type='submit']");
+	const label = button?.querySelector<HTMLElement>("[data-label]");
+	if (label) label.textContent = savedLabel;
+	else if (button) button.textContent = savedLabel;
+	if (button) {
+		button.disabled = false;
+		button.classList.add("is-submit-saved");
+		button.setAttribute("aria-disabled", "true");
+	}
+	form.removeAttribute("aria-busy");
+	return true;
+}
+
+function finish(form: HTMLFormElement, onSuccess?: (form: HTMLFormElement) => void): void {
+	const saved = applySavedSubmitState(form);
+	const button = form.querySelector<HTMLButtonElement>("[type='submit']");
+	if (!saved && button) button.disabled = false;
+
+	if (onSuccess) {
+		try {
+			onSuccess(form);
+		} catch {
+			/* Keep saved label if the post-success UI fails. */
+		}
+	} else showSuccess(form);
 }
 
 export function bindForm(
@@ -115,12 +133,17 @@ export function bindForm(
 	if (!form) return;
 
 	const endpoint = form.dataset.endpoint?.trim() ?? "";
-	const button = form.querySelector<HTMLButtonElement>("[type='submit']");
+	const button =
+		form.querySelector<HTMLButtonElement>("[data-signup-submit]") ??
+		form.querySelector<HTMLButtonElement>("[type='submit']");
 	const label = button?.querySelector<HTMLElement>("[data-label]");
 	const original = label?.textContent ?? button?.textContent ?? "Send";
 
 	form.addEventListener("submit", async (event) => {
 		event.preventDefault();
+		if (form.dataset.signupComplete === "true" || form.querySelector(".is-submit-saved")) {
+			return;
+		}
 		clearAlert(form);
 
 		const honeypot = form.querySelector<HTMLInputElement>("[name='_gotcha']");
@@ -180,7 +203,11 @@ export function bindForm(
 			finish(form, options?.onSuccess);
 		} catch {
 			setAlert(form, site.forms.genericError);
-			if (button) button.disabled = false;
+			if (button) {
+				button.disabled = false;
+				button.classList.remove("is-submit-saved");
+				button.removeAttribute("aria-disabled");
+			}
 			if (label) label.textContent = original;
 		} finally {
 			form.removeAttribute("aria-busy");

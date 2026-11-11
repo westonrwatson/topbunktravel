@@ -233,7 +233,7 @@ const thanks = form.thanks;
 
 <script>
 	import { site } from "../content/site";
-	import { bindForm } from "../scripts/form";
+	import { applySavedSubmitState, bindForm } from "../scripts/form";
 	import { bindButtonReveal } from "../scripts/buttonReveal";
 
 	const section = document.getElementById("waitlist");
@@ -318,6 +318,8 @@ const thanks = form.thanks;
 
 	bindForm(signup, {
 		onSuccess(form) {
+			form.dataset.signupComplete = "true";
+			applySavedSubmitState(form);
 			const email = form.querySelector<HTMLInputElement>("[name='email']");
 			if (surveyEmail && email) surveyEmail.value = email.value.trim();
 			playDialogIntro();
@@ -429,7 +431,12 @@ const thanks = form.thanks;
 		clearIntroTimers();
 		revealDialogForm();
 	});
-	dialog?.addEventListener("close", resetDialog);
+	dialog?.addEventListener("close", () => {
+		if (signup?.dataset.signupComplete === "true") {
+			applySavedSubmitState(signup);
+		}
+		resetDialog();
+	});
 
 	section?.addEventListener("click", async (event) => {
 		const button = (event.target as Element | null)?.closest<HTMLButtonElement>("[data-share]");

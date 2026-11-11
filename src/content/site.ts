@@ -245,7 +245,7 @@ export const site = {
 	},
 	forms: {
 		sending: "Sending…",
-		spotSaved: "YOUR SPOT IS SAVED",
+		spotSaved: "You’re on the list",
 		missingEndpoint: "We can’t take this just yet. Please try again soon.",
 		genericError: "Something went wrong on our side. Please try again in a moment.",
 		required: "This field is required.",

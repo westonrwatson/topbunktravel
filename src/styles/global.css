@@ -279,6 +279,17 @@ a {
 	background: var(--red);
 }
 
+#waitlist .signup .btn-reveal.is-submit-saved {
+	cursor: default;
+}
+
+#waitlist .signup .btn-reveal.is-submit-saved:hover,
+#waitlist .signup .btn-reveal.is-submit-saved.is-reveal-active {
+	background: var(--black);
+	border-color: var(--black);
+	color: var(--white);
+}
+
 .hostel-form .btn-reveal {
 	background: var(--red);
 	border-color: var(--red);

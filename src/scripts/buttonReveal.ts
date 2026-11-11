@@ -30,6 +30,7 @@ export function bindButtonReveal(button: HTMLElement | null): void {
 
 	button.addEventListener("pointerenter", (event) => {
 		if (!(event instanceof PointerEvent)) return;
+		if (button.classList.contains("is-submit-saved")) return;
 		play(event.clientX, event.clientY);
 	});
 
