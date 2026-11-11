@@ -139,15 +139,34 @@ export function bindForm(
 		form.setAttribute("aria-busy", "true");
 
 		try {
+			const usesGoogleScript = endpoint.includes("script.google.com");
 			const response = await fetch(endpoint, {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Accept: "application/json",
-				},
+				redirect: "follow",
+				headers: usesGoogleScript
+					? {
+							"Content-Type": "text/plain;charset=utf-8",
+							Accept: "application/json",
+						}
+					: {
+							"Content-Type": "application/json",
+							Accept: "application/json",
+						},
 				body: JSON.stringify(payload(form)),
 			});
-			if (!response.ok) throw new Error(String(response.status));
+
+			const text = await response.text();
+			let accepted = response.ok;
+			if (!accepted) {
+				try {
+					const data = JSON.parse(text) as { ok?: boolean };
+					accepted = data.ok === true;
+				} catch {
+					accepted = text.includes('"ok":true');
+				}
+			}
+
+			if (!accepted) throw new Error(String(response.status));
 			finish(form, options?.onSuccess);
 		} catch {
 			setAlert(form, site.forms.genericError);

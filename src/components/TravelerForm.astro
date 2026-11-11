@@ -3,7 +3,10 @@ import { site } from "../content/site";
 import FilmImage from "./FilmImage.astro";
 import spencerEyes from "../assets/images/spencer-eyes.jpg";
 
-const endpoint = import.meta.env.PUBLIC_TRAVELER_FORM_ENDPOINT ?? "";
+const endpoint =
+	import.meta.env.PUBLIC_FORMS_ENDPOINT?.trim() ||
+	import.meta.env.PUBLIC_TRAVELER_FORM_ENDPOINT?.trim() ||
+	"";
 const form = site.travelerForm;
 const survey = form.survey;
 const thanks = form.thanks;
@@ -118,7 +121,7 @@ const thanks = form.thanks;
 				<form class="survey" novalidate data-endpoint={endpoint} data-form="traveler-survey">
 					<div data-fields class="survey-body">
 						<input type="hidden" name="email" data-survey-email value="" />
-						<input type="hidden" name="form_name" value="survey" />
+						<input type="hidden" name="form_name" value="waitlist survey" />
 
 						<div class="survey-lede">
 							<p class="survey-intro">{survey.intro}</p>

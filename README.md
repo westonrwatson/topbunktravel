@@ -28,20 +28,15 @@ Canonical and social links use `https://topbunktravel.westonwatson.com`. Set `PU
 
 ## Form endpoints
 
-Both forms post JSON from the browser. They work with [Formspree](https://formspree.io) or any endpoint that accepts:
-
-```http
-POST /
-Content-Type: application/json
-Accept: application/json
-```
-
-Create two forms, then add the URLs to `.env`:
+Forms POST JSON from the browser. **Google Sheets (recommended):** follow [docs/GOOGLE_SHEETS.md](docs/GOOGLE_SHEETS.md), deploy the script, then set:
 
 ```sh
-PUBLIC_TRAVELER_FORM_ENDPOINT=https://formspree.io/f/your-traveler-id
-PUBLIC_HOSTEL_FORM_ENDPOINT=https://formspree.io/f/your-hostel-id
+PUBLIC_FORMS_ENDPOINT=https://script.google.com/macros/s/your-id/exec
 ```
+
+That writes to the `waitlist`, `waitlist survey`, and `hostels` tabs in your spreadsheet.
+
+Alternatively, use [Formspree](https://formspree.io) URLs in `PUBLIC_TRAVELER_FORM_ENDPOINT` and `PUBLIC_HOSTEL_FORM_ENDPOINT` (leave `PUBLIC_FORMS_ENDPOINT` empty).
 
 Restart the dev server after changing `.env`.
 

@@ -1,7 +1,10 @@
 ---
 import { site } from "../content/site";
 
-const endpoint = import.meta.env.PUBLIC_HOSTEL_FORM_ENDPOINT ?? "";
+const endpoint =
+	import.meta.env.PUBLIC_FORMS_ENDPOINT?.trim() ||
+	import.meta.env.PUBLIC_HOSTEL_FORM_ENDPOINT?.trim() ||
+	"";
 const copy = site.hostels;
 ---
 
@@ -61,6 +64,8 @@ const copy = site.hostels;
 				<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
 			</label>
 		</p>
+
+		<input type="hidden" name="form_name" value="hostels" />
 
 		<p class="form-alert" data-alert role="alert" hidden></p>
 		<button class="btn btn-red btn-reveal" type="submit" data-hostel-submit>
