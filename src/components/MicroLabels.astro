@@ -26,12 +26,13 @@ import { site } from "../content/site";
 		text-align: center;
 	}
 
-	/* Mobile: dots between the first three labels. */
-	.microstrip li:nth-child(-n + 2)::after {
+	/* Mobile: dot between the two visible labels. */
+	.microstrip li:first-child::after {
 		content: "•";
 		margin-left: 0.6rem;
 	}
 
+	.microstrip li:nth-child(3),
 	.microstrip li:last-child {
 		display: none;
 	}
@@ -43,10 +44,11 @@ import { site } from "../content/site";
 			text-align: left;
 		}
 
-		.microstrip li:nth-child(-n + 2)::after {
+		.microstrip li:first-child::after {
 			content: none;
 		}
 
+		.microstrip li:nth-child(3),
 		.microstrip li:last-child {
 			display: list-item;
 		}
