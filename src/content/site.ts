@@ -100,7 +100,7 @@ export const site = {
 	},
 	travelerForm: {
 		title: "Join The Founding 500",
-		intro: "Get early access and Founding pricing\nbefore The pass goes on sale.",
+		intro: "Get early access and Founding pricing before The pass goes on sale.",
 		email: "Email",
 		consentLead: "I agree to the",
 		consentLink: "privacy policy",

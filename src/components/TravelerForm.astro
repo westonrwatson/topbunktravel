@@ -14,14 +14,7 @@ const thanks = form.thanks;
 		<div class="form-wrap">
 			<div class="form-head" data-signup-head>
 				<h2 id="waitlist-title" class="section-title">{form.title}</h2>
-				<p class="form-intro">
-					{form.intro.split("\n").map((line, index, lines) => (
-						<>
-							{line}
-							{index < lines.length - 1 && <br />}
-						</>
-					))}
-				</p>
+				<p class="form-intro">{form.intro}</p>
 			</div>
 			<form class="signup" novalidate data-endpoint={endpoint} data-form="traveler">
 				<div data-fields>
@@ -960,6 +953,15 @@ const thanks = form.thanks;
 			display: flex;
 			flex-direction: column;
 			min-height: 28rem;
+		}
+
+		.form-wrap .form-head {
+			width: max-content;
+			max-width: 100%;
+		}
+
+		.form-wrap .form-intro {
+			max-width: 91%;
 		}
 
 		.signup {
