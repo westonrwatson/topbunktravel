@@ -110,7 +110,14 @@ const form = site.travelerForm;
 
 <style>
 	#waitlist {
-		padding-bottom: clamp(1.5rem, 3vw, 2.25rem);
+		background: var(--yellow);
+		color: var(--black);
+	}
+
+	.field-error {
+		background: var(--white);
+		padding: 0.25rem 0.45rem;
+		width: fit-content;
 	}
 
 	.waitlist-layout {
@@ -147,10 +154,6 @@ const form = site.travelerForm;
 	}
 
 	@media (min-width: 900px) {
-		#waitlist {
-			padding-bottom: 2.25rem;
-		}
-
 		.waitlist-layout {
 			grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
 			align-items: stretch;
@@ -194,22 +197,22 @@ const form = site.travelerForm;
 		margin-bottom: 0.4rem;
 	}
 
-	/* Orange accents: display type only at 48px and up, black text on orange. */
+	/* Black text on yellow; orange stays on the button. */
 	.section-title {
-		color: var(--orange);
+		color: var(--black);
 		font-size: clamp(3rem, 6.5vw, 5.6rem);
 	}
 
 	.signup .btn-red {
-		background: var(--orange);
-		border-color: var(--orange);
+		background: var(--black);
+		border-color: var(--black);
 		color: var(--white);
 	}
 
 	.signup .btn-red:hover {
-		background: var(--orange);
-		border-color: var(--orange);
-		filter: brightness(0.94);
+		background: var(--black);
+		border-color: var(--black);
+		filter: brightness(1.25);
 	}
 
 	.choice input,
@@ -218,7 +221,7 @@ const form = site.travelerForm;
 	}
 
 	.success {
-		color: var(--orange);
+		color: var(--black);
 		font-size: var(--text-lg);
 	}
 </style>
