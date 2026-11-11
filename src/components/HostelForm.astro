@@ -63,26 +63,106 @@ const copy = site.hostels;
 		</p>
 
 		<p class="form-alert" data-alert role="alert" hidden></p>
-		<button class="btn btn-red" type="submit">
+		<button class="btn btn-red btn-reveal" type="submit" data-hostel-submit>
+			<span class="btn-reveal-fill" aria-hidden="true"></span>
 			<span data-label>{copy.submit}</span>
 		</button>
 	</div>
-	<p class="success" data-success role="status" tabindex="-1" hidden>{copy.success}</p>
+	<div class="success" data-success role="status" tabindex="-1" hidden>
+		<p class="success-title">{copy.success.title}</p>
+		<p class="success-body">
+			{copy.success.body}<a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">{copy.success.instagram}</a>.
+		</p>
+	</div>
 </form>
 
 <script>
 	import { bindForm } from "../scripts/form";
-	bindForm(document.querySelector<HTMLFormElement>("[data-form='hostel']"));
+	import { bindButtonReveal } from "../scripts/buttonReveal";
+
+	const hostelForm = document.querySelector<HTMLFormElement>("[data-form='hostel']");
+	bindForm(hostelForm);
+	bindButtonReveal(hostelForm?.querySelector<HTMLElement>("[data-hostel-submit]") ?? null);
 </script>
 
 <style>
-	.hostel-form,
+	.hostel-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		min-height: 0;
+	}
+
 	.hostel-form [data-fields] {
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		gap: 1rem;
 	}
 
 	.form-grid {
 		margin-bottom: 0.35rem;
+	}
+
+	.hostel-form .check {
+		text-transform: none;
+	}
+
+	.hostel-form .success {
+		margin: 0;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: clamp(0.85rem, 2vw, 1.15rem);
+		padding: clamp(1.25rem, 3vw, 2rem);
+		text-align: center;
+		color: var(--black);
+	}
+
+	.hostel-form .success-title {
+		margin: 0;
+		font-family: var(--font-wordmark);
+		font-size: clamp(2.75rem, 7vw, 4.25rem);
+		font-weight: 400;
+		line-height: 1;
+		letter-spacing: -0.03em;
+		text-transform: none;
+	}
+
+	.hostel-form .success-body {
+		margin: 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-lg);
+		font-weight: 400;
+		line-height: 1.35;
+		max-width: 42ch;
+		text-transform: uppercase;
+	}
+
+	.hostel-form .success-body a {
+		color: inherit;
+		font-weight: 500;
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
+	}
+
+	.hostel-form .success-body a:hover {
+		color: var(--red);
+	}
+
+	.hostel-form .success[hidden] {
+		display: none;
+	}
+
+	@media (min-width: 960px) {
+		.hostel-form {
+			height: 100%;
+		}
+
+		.hostel-form [data-fields] {
+			flex: 1;
+			min-height: 0;
+		}
 	}
 </style>

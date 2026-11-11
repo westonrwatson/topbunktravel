@@ -34,7 +34,7 @@ function validate(form: HTMLFormElement): Field | null {
 		let message = "";
 
 		if (field instanceof HTMLInputElement && field.type === "checkbox") {
-			if (field.required && !field.checked) message = site.forms.consent;
+			if (field.required && !field.checked) message = field.dataset.error || site.forms.consent;
 		} else if (field.required && !value) {
 			message = site.forms.required;
 		} else if (value && field.type === "email" && !emailPattern.test(value)) {
@@ -93,7 +93,15 @@ function payload(form: HTMLFormElement): Record<string, string> {
 	return body;
 }
 
-export function bindForm(form: HTMLFormElement | null): void {
+function finish(form: HTMLFormElement, onSuccess?: (form: HTMLFormElement) => void): void {
+	if (onSuccess) onSuccess(form);
+	else showSuccess(form);
+}
+
+export function bindForm(
+	form: HTMLFormElement | null,
+	options?: { onSuccess?: (form: HTMLFormElement) => void },
+): void {
 	if (!form) return;
 
 	const endpoint = form.dataset.endpoint?.trim() ?? "";
@@ -107,7 +115,7 @@ export function bindForm(form: HTMLFormElement | null): void {
 
 		const honeypot = form.querySelector<HTMLInputElement>("[name='_gotcha']");
 		if (honeypot?.value) {
-			showSuccess(form);
+			finish(form, options?.onSuccess);
 			return;
 		}
 
@@ -118,6 +126,10 @@ export function bindForm(form: HTMLFormElement | null): void {
 		}
 
 		if (!endpoint) {
+			if (import.meta.env.DEV) {
+				finish(form, options?.onSuccess);
+				return;
+			}
 			setAlert(form, site.forms.missingEndpoint);
 			return;
 		}
@@ -136,7 +148,7 @@ export function bindForm(form: HTMLFormElement | null): void {
 				body: JSON.stringify(payload(form)),
 			});
 			if (!response.ok) throw new Error(String(response.status));
-			showSuccess(form);
+			finish(form, options?.onSuccess);
 		} catch {
 			setAlert(form, site.forms.genericError);
 			if (button) button.disabled = false;

@@ -8,7 +8,12 @@ import HostelForm from "./HostelForm.astro";
 		<div class="hostel-copy" data-reveal>
 			<h2 id="hostel-title">{site.hostels.title}</h2>
 			<p class="intro">
-				{site.hostels.intro.map((line) => <span class="intro-line">{line}</span>)}
+				{site.hostels.intro.map((line, index) => (
+					<>
+						{index > 0 && <br />}
+						<span class="intro-line">{line}</span>
+					</>
+				))}
 			</p>
 			<ol class="benefits">
 				{
@@ -71,6 +76,7 @@ import HostelForm from "./HostelForm.astro";
 		list-style: none;
 		margin: 1.5rem 0 0;
 		padding: 0;
+		text-transform: none;
 	}
 
 	.benefits li {
@@ -98,6 +104,9 @@ import HostelForm from "./HostelForm.astro";
 		color: var(--black);
 		border-radius: var(--radius);
 		padding: clamp(1.25rem, 2.5vw, 2rem);
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
 	}
 
 	@media (max-width: 959px) {
@@ -112,6 +121,11 @@ import HostelForm from "./HostelForm.astro";
 			grid-template-columns: minmax(0, 0.8fr) minmax(22rem, 1.2fr);
 			gap: 3rem;
 			align-items: stretch;
+		}
+
+		.hostel-card :global(.hostel-form) {
+			flex: 1;
+			min-height: 0;
 		}
 
 		.benefits {

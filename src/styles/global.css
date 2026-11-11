@@ -47,6 +47,11 @@
 	box-sizing: border-box;
 }
 
+/* Author display values must not override the hidden attribute. */
+[hidden] {
+	display: none !important;
+}
+
 html {
 	scroll-behavior: smooth;
 	scroll-padding-top: 1.25rem;
@@ -229,6 +234,142 @@ a {
 .btn:disabled {
 	opacity: 0.6;
 	cursor: progress;
+}
+
+.btn-reveal {
+	position: relative;
+	overflow: hidden;
+	touch-action: manipulation;
+}
+
+.btn-reveal-fill {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 0;
+	border-radius: 50%;
+	pointer-events: none;
+	transform: translate(-50%, -50%) scale(0);
+	transition: transform 0.45s ease;
+	transform-origin: center;
+}
+
+.btn-reveal.is-reveal-active .btn-reveal-fill {
+	transform: translate(-50%, -50%) scale(1);
+	transition-delay: 0.02s;
+}
+
+.btn-reveal:not(.is-reveal-active) .btn-reveal-fill {
+	transition-delay: 0s;
+}
+
+.btn-reveal [data-label] {
+	position: relative;
+	z-index: 1;
+	transition: color 0.35s ease;
+}
+
+#waitlist .signup .btn-reveal {
+	background: var(--black);
+	border-color: var(--black);
+	color: var(--white);
+}
+
+#waitlist .signup .btn-reveal-fill {
+	background: var(--red);
+}
+
+.hostel-form .btn-reveal {
+	background: var(--red);
+	border-color: var(--red);
+	color: var(--white);
+}
+
+.hostel-form .btn-reveal-fill {
+	background: var(--yellow);
+}
+
+.hostel-form .btn-reveal.is-reveal-active {
+	color: var(--black);
+}
+
+.dialog-thanks .thanks-actions .btn-black.btn-reveal {
+	background: var(--black);
+	border-color: var(--black);
+	color: var(--white);
+	text-decoration: none;
+}
+
+.dialog-thanks .thanks-actions .btn-black.btn-reveal .btn-reveal-fill {
+	background: var(--red);
+}
+
+.dialog-thanks .thanks-actions .btn-outline.btn-reveal {
+	background: var(--white);
+	border-color: var(--black);
+	color: var(--black);
+}
+
+.dialog-thanks .thanks-actions .btn-outline.btn-reveal .btn-reveal-fill {
+	background: var(--black);
+}
+
+.dialog-thanks .thanks-actions .btn-outline.btn-reveal.is-reveal-active {
+	color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.btn-reveal-fill {
+		display: none;
+	}
+
+	#waitlist .signup .btn-reveal:hover {
+		background: var(--red);
+		border-color: var(--red);
+		color: var(--white);
+	}
+
+	.hostel-form .btn-reveal:hover {
+		background: var(--yellow);
+		border-color: var(--yellow);
+		color: var(--black);
+	}
+
+	.dialog-thanks .thanks-actions .btn-black.btn-reveal:hover {
+		background: var(--red);
+		border-color: var(--red);
+		color: var(--white);
+	}
+
+	.dialog-thanks .thanks-actions .btn-outline.btn-reveal:hover {
+		background: var(--black);
+		border-color: var(--black);
+		color: var(--white);
+	}
+
+	.carousel-controls .btn-reveal:hover:not(:disabled) {
+		background: var(--red);
+		border-color: var(--red);
+		color: var(--white);
+	}
+}
+
+#waitlist .signup .btn-red,
+.hostel-form button[type="submit"] {
+	min-height: 6rem;
+	padding-block: 1.35rem;
+}
+
+@media (min-width: 960px) {
+	#waitlist .signup .btn-red,
+	.hostel-form button[type="submit"] {
+		margin-top: auto;
+		width: 100%;
+		flex: 0 0 auto;
+		height: clamp(10.5rem, 18vh, 13.25rem);
+		min-height: clamp(10.5rem, 18vh, 13.25rem);
+		padding-block: 1rem;
+	}
 }
 
 .film {

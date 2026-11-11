@@ -10,27 +10,37 @@ const page = site.privacy;
 ---
 
 <BaseLayout title={`${page.title} | ${site.legalName}`} description={page.description}>
-	<Header />
-	<main id="main" class="privacy">
-		<article class="wrap">
-			<h1>{page.title}</h1>
-			{
-				page.sections.map((section) => (
-					<section>
-						<h2>{section.heading}</h2>
-						<p>{section.body}</p>
-					</section>
-				))
-			}
-			<p class="back"><a href="/">Back to Top Bunk</a></p>
-		</article>
-	</main>
-	<Footer />
+	<div class="privacy-page">
+		<Header />
+		<main id="main" class="privacy">
+			<article class="wrap">
+				<h1>{page.title}</h1>
+				{
+					page.sections.map((section) => (
+						<section>
+							<h2>{section.heading}</h2>
+							<p>{section.body}</p>
+						</section>
+					))
+				}
+				<p class="back"><a href="/">Back to Top Bunk</a></p>
+			</article>
+		</main>
+		<Footer bare />
+	</div>
 </BaseLayout>
 
 <style>
+	.privacy-page {
+		display: flex;
+		flex-direction: column;
+		min-height: 100svh;
+	}
+
 	.privacy {
+		flex: 1;
 		padding-block: clamp(2.5rem, 6vw, 4.5rem);
+		text-transform: none;
 	}
 
 	article {

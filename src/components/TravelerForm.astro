@@ -1,111 +1,453 @@
 ---
 import { site } from "../content/site";
 import FilmImage from "./FilmImage.astro";
-import juddgabe from "../assets/images/juddgabe.jpg";
+import spencerEyes from "../assets/images/spencer-eyes.jpg";
 
-// TODO: Referral waitlist — after a successful join, offer a way to move up
-// the list by inviting friends. Hook that in here, using the same email,
-// without blocking the initial signup.
 const endpoint = import.meta.env.PUBLIC_TRAVELER_FORM_ENDPOINT ?? "";
 const form = site.travelerForm;
+const survey = form.survey;
+const thanks = form.thanks;
 ---
 
 <section class="section" id="waitlist" aria-labelledby="waitlist-title">
 	<div class="wrap waitlist-layout">
 		<div class="form-wrap">
-		<div class="form-head">
-			<h2 id="waitlist-title" class="section-title">{form.title}</h2>
-			<p class="form-intro">{form.intro}</p>
-		</div>
-		<form class="signup" novalidate data-endpoint={endpoint} data-form="traveler">
-			<div data-fields>
-				<div class="form-grid cols-2">
-					<div class="field span-2">
-						<label class="field-label" for="traveler-email">
-							{form.email} <span class="req" aria-hidden="true">*</span>
-						</label>
-						<input
-							id="traveler-email"
-							name="email"
-							type="email"
-							autocomplete="email"
-							required
-							aria-describedby="traveler-email-error"
-						/>
-						<p id="traveler-email-error" class="field-error" hidden></p>
-					</div>
-
-					<div class="field">
-						<label class="field-label" for="traveler-city">
-							{form.city} <span class="req" aria-hidden="true">*</span>
-						</label>
-						<select id="traveler-city" name="first_city" required aria-describedby="traveler-city-error">
-							<option value="" disabled selected>{form.cityPlaceholder}</option>
-							{form.cities.map((city) => <option value={city}>{city}</option>)}
-						</select>
-						<p id="traveler-city-error" class="field-error" hidden></p>
-					</div>
-
-					<div class="field">
-						<label class="field-label" for="traveler-timing">
-							{form.timing} <span class="req" aria-hidden="true">*</span>
-						</label>
-						<select id="traveler-timing" name="timing" required aria-describedby="traveler-timing-error">
-							<option value="" disabled selected>{form.timingPlaceholder}</option>
-							{form.timings.map((option) => <option value={option.value}>{option.label}</option>)}
-						</select>
-						<p id="traveler-timing-error" class="field-error" hidden></p>
-					</div>
-
-					<div class="field span-2">
-						<label class="check" for="traveler-consent">
-							<input
-								id="traveler-consent"
-								name="consent"
-								type="checkbox"
-								value="yes"
-								required
-								aria-describedby="traveler-consent-error"
-							/>
-							<span>
-								{form.consentLead} <a href="/privacy">{form.consentLink}</a> {form.consentTail}
-								<span class="req" aria-hidden="true">*</span>
-							</span>
-						</label>
-						<p id="traveler-consent-error" class="field-error" hidden></p>
-					</div>
-				</div>
-
-				<p class="hp" aria-hidden="true">
-					<label>
-						Leave this blank
-						<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
-					</label>
+			<div class="form-head" data-signup-head>
+				<h2 id="waitlist-title" class="section-title">{form.title}</h2>
+				<p class="form-intro">
+					{form.intro.split("\n").map((line, index, lines) => (
+						<>
+							{line}
+							{index < lines.length - 1 && <br />}
+						</>
+					))}
 				</p>
-
-				<p class="form-alert" data-alert role="alert" hidden></p>
-				<button class="btn btn-red" type="submit">
-					<span data-label>{form.submit}</span>
-				</button>
 			</div>
-			<p class="success" data-success role="status" tabindex="-1" hidden>{form.success}</p>
-		</form>
+			<form class="signup" novalidate data-endpoint={endpoint} data-form="traveler">
+				<div data-fields>
+					<div class="form-grid">
+						<div class="field">
+							<label class="field-label" for="traveler-email">
+								{form.email} <span class="req" aria-hidden="true">*</span>
+							</label>
+							<input
+								id="traveler-email"
+								name="email"
+								type="email"
+								autocomplete="email"
+								required
+								aria-describedby="traveler-email-error"
+							/>
+							<p id="traveler-email-error" class="field-error" hidden></p>
+						</div>
+
+						<div class="field">
+							<label class="check" for="traveler-consent">
+								<input
+									id="traveler-consent"
+									name="consent"
+									type="checkbox"
+									value="yes"
+									required
+									data-error={form.consentError}
+									aria-describedby="traveler-consent-error"
+								/>
+								<span>
+									{form.consentLead} <a href="/privacy">{form.consentLink}</a>{form.consentTail}
+									<span class="req" aria-hidden="true">*</span>
+								</span>
+							</label>
+							<p id="traveler-consent-error" class="field-error" hidden></p>
+						</div>
+
+						<div class="field">
+							<label class="check" for="traveler-updates">
+								<input id="traveler-updates" name="updates" type="checkbox" value="yes" />
+								<span>{form.updates}</span>
+							</label>
+						</div>
+					</div>
+
+					<input type="hidden" name="form_name" value="waitlist" />
+
+					<p class="hp" aria-hidden="true">
+						<label>
+							Leave this blank
+							<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+						</label>
+					</p>
+
+					<p class="form-alert" data-alert role="alert" hidden></p>
+					<button class="btn btn-red btn-reveal" type="submit" data-signup-submit>
+						<span class="btn-reveal-fill" aria-hidden="true"></span>
+						<span data-label>{form.submit}</span>
+					</button>
+				</div>
+			</form>
 		</div>
 		<FilmImage
 			class="waitlist-photo"
-			src={juddgabe}
-			alt="Two travelers on a sunlit waterfront promenade, seen from behind."
+			src={spencerEyes}
+			alt="A traveler laughing with his hands shaped like binoculars, with temples and green hills behind."
 			widths={[480, 720, 960, 1200]}
-			sizes="(min-width: 900px) 40vw, 1px"
-			aspect="2 / 3"
-			objectPosition="center 62%"
+			sizes="(min-width: 900px) 46vw, 1px"
+			aspect="5 / 6"
+			objectPosition="center 45%"
 		/>
 	</div>
+
+	<dialog class="dialog" data-dialog aria-labelledby="waitlist-success">
+		<div class="dialog-card dialog-card--intro" data-dialog-card>
+			<div class="dialog-landing" data-dialog-landing>
+				<button class="dialog-close" type="button" data-close aria-label="Close">×</button>
+				<p class="survey-success survey-success--center" tabindex="-1">
+					{form.success.split("\n").map((line, index, lines) => (
+						<>
+							{line}
+							{index < lines.length - 1 && <br />}
+						</>
+					))}
+				</p>
+			</div>
+			<div data-survey-panel class="survey-panel">
+				<header class="dialog-header">
+					<p id="waitlist-success" class="survey-success" tabindex="-1">
+						{form.success.split("\n").map((line, index, lines) => (
+							<>
+								{line}
+								{index < lines.length - 1 && <br />}
+							</>
+						))}
+					</p>
+					<button class="dialog-close" type="button" data-close aria-label="Close">×</button>
+				</header>
+
+				<form class="survey" novalidate data-endpoint={endpoint} data-form="traveler-survey">
+					<div data-fields class="survey-body">
+						<input type="hidden" name="email" data-survey-email value="" />
+						<input type="hidden" name="form_name" value="survey" />
+
+						<div class="survey-lede">
+							<p class="survey-intro">{survey.intro}</p>
+						</div>
+
+						<div class="survey-scroll">
+							<div class="survey-questions">
+								{
+									survey.questions.map((question) => (
+										<fieldset class="survey-block">
+											<legend class="legend">{question.legend}</legend>
+											<div
+												class:list={[
+													"survey-options",
+													question.options.length > 4 && "survey-options--grid",
+												]}
+											>
+												{question.options.map((option) => (
+													<label class="choice">
+														<input
+															type="radio"
+															name={question.name}
+															value={option}
+															data-reveals={option === question.otherValue ? "other" : undefined}
+														/>
+														<span>{option}</span>
+													</label>
+												))}
+											</div>
+											{question.otherName && (
+												<div class="field other-field" data-other={question.name} hidden>
+													<label class="field-label" for={question.otherName}>
+														{question.otherLabel}
+													</label>
+													<input id={question.otherName} name={question.otherName} type="text" />
+												</div>
+											)}
+										</fieldset>
+									))
+								}
+							</div>
+						</div>
+
+						<p class="hp" aria-hidden="true">
+							<label>
+								Leave this blank
+								<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+							</label>
+						</p>
+
+						<footer class="survey-foot">
+							<p class="form-alert" data-alert role="alert" hidden></p>
+							<button class="btn btn-red survey-submit" type="submit" disabled>
+								<span data-label>{survey.submit}</span>
+							</button>
+							<button class="survey-skip" type="button" data-skip>
+								{survey.skip}
+							</button>
+						</footer>
+					</div>
+				</form>
+			</div>
+
+			<div class="dialog-thanks" data-dialog-thanks hidden>
+				<button class="dialog-close" type="button" data-close aria-label="Close">×</button>
+				<h2 class="thanks-heading" tabindex="-1">{thanks.title}</h2>
+				<p class="thanks-lede">{thanks.body}</p>
+				<div class="thanks-actions">
+					<a
+						class="btn btn-black btn-reveal"
+						data-thanks-instagram
+						href={site.instagramUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<span class="btn-reveal-fill" aria-hidden="true"></span>
+						<span data-label>{thanks.instagram}</span>
+					</a>
+					<button class="btn btn-outline btn-reveal" type="button" data-thanks-share data-share>
+						<span class="btn-reveal-fill" aria-hidden="true"></span>
+						<span data-label>{thanks.share}</span>
+					</button>
+				</div>
+				<p class="share-note" data-copied hidden>{thanks.copied}</p>
+			</div>
+		</div>
+	</dialog>
 </section>
 
 <script>
+	import { site } from "../content/site";
 	import { bindForm } from "../scripts/form";
-	bindForm(document.querySelector<HTMLFormElement>("[data-form='traveler']"));
+	import { bindButtonReveal } from "../scripts/buttonReveal";
+
+	const section = document.getElementById("waitlist");
+	const signup = document.querySelector<HTMLFormElement>("[data-form='traveler']");
+	const surveyForm = document.querySelector<HTMLFormElement>("[data-form='traveler-survey']");
+	const dialog = document.querySelector<HTMLDialogElement>("[data-dialog]");
+	const surveyEmail = surveyForm?.querySelector<HTMLInputElement>("[data-survey-email]");
+	const dialogCard = dialog?.querySelector<HTMLElement>("[data-dialog-card]");
+	const dialogLanding = dialog?.querySelector<HTMLElement>("[data-dialog-landing]");
+	const surveyPanel = dialog?.querySelector<HTMLElement>("[data-survey-panel]");
+	const dialogThanks = dialog?.querySelector<HTMLElement>("[data-dialog-thanks]");
+	const introMs = 1000;
+	const revealMs = 480;
+	const introMsReduced = 1000;
+	let revealTimer: ReturnType<typeof setTimeout> | undefined;
+	let landingTimer: ReturnType<typeof setTimeout> | undefined;
+
+	const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	const clearIntroTimers = () => {
+		if (revealTimer) window.clearTimeout(revealTimer);
+		if (landingTimer) window.clearTimeout(landingTimer);
+		revealTimer = undefined;
+		landingTimer = undefined;
+	};
+
+	const revealDialogForm = () => {
+		if (!dialogCard || !dialogLanding) return;
+		dialogLanding.classList.add("dialog-landing--exit");
+		dialogCard.classList.remove("dialog-card--intro");
+		dialogCard.classList.add("dialog-card--revealed");
+		landingTimer = window.setTimeout(() => {
+			dialogLanding.hidden = true;
+			dialogLanding.classList.remove("dialog-landing--exit");
+			dialog?.querySelector<HTMLElement>("#waitlist-success")?.focus();
+			updateSurveySubmit();
+		}, prefersReducedMotion() ? 0 : revealMs);
+	};
+
+	const playDialogIntro = () => {
+		clearIntroTimers();
+		if (!dialogCard || !dialogLanding) return;
+		dialogCard.classList.remove("dialog-card--revealed");
+		dialogCard.classList.add("dialog-card--intro");
+		dialogLanding.hidden = false;
+		dialogLanding.classList.remove("dialog-landing--exit");
+
+		const holdMs = prefersReducedMotion() ? introMsReduced : introMs;
+		revealTimer = window.setTimeout(revealDialogForm, holdMs);
+	};
+
+	const resetDialogIntro = () => {
+		clearIntroTimers();
+		dialogCard?.classList.remove("dialog-card--revealed", "dialog-card--thanks");
+		dialogCard?.classList.add("dialog-card--intro");
+		if (dialogLanding) {
+			dialogLanding.hidden = false;
+			dialogLanding.classList.remove("dialog-landing--exit");
+		}
+	};
+
+	function resetDialog(): void {
+		resetDialogIntro();
+		if (surveyPanel) surveyPanel.hidden = false;
+		if (dialogThanks) dialogThanks.hidden = true;
+		surveyForm?.reset();
+		for (const box of surveyForm?.querySelectorAll<HTMLElement>("[data-other]") ?? []) {
+			box.hidden = true;
+		}
+		updateSurveySubmit();
+	}
+
+	function showDialogThanks(): void {
+		clearIntroTimers();
+		if (dialogLanding) dialogLanding.hidden = true;
+		if (surveyPanel) surveyPanel.hidden = true;
+		if (dialogThanks) dialogThanks.hidden = false;
+		dialogCard?.classList.remove("dialog-card--intro", "dialog-card--revealed");
+		dialogCard?.classList.add("dialog-card--thanks");
+		dialogThanks?.querySelector<HTMLElement>(".thanks-heading")?.focus();
+	}
+
+	bindForm(signup, {
+		onSuccess(form) {
+			const email = form.querySelector<HTMLInputElement>("[name='email']");
+			if (surveyEmail && email) surveyEmail.value = email.value.trim();
+			playDialogIntro();
+			dialog?.showModal();
+			window.requestAnimationFrame(() => {
+				dialogLanding?.querySelector<HTMLElement>(".survey-success")?.focus();
+			});
+		},
+	});
+
+	bindButtonReveal(signup?.querySelector<HTMLElement>("[data-signup-submit]") ?? null);
+	bindButtonReveal(dialog?.querySelector<HTMLElement>("[data-thanks-instagram]") ?? null);
+	bindButtonReveal(dialog?.querySelector<HTMLElement>("[data-thanks-share]") ?? null);
+
+	const surveySubmit = surveyForm?.querySelector<HTMLButtonElement>(".survey-submit");
+
+	const surveyHasAnswers = (): boolean => {
+		if (!surveyForm) return false;
+		if (surveyForm.querySelector('input[type="radio"]:checked')) return true;
+		for (const input of surveyForm.querySelectorAll<HTMLInputElement>('input[type="text"]')) {
+			if (input.name === "_gotcha") continue;
+			if (input.value.trim()) return true;
+		}
+		return false;
+	};
+
+	const updateSurveySubmit = (): void => {
+		if (!surveySubmit) return;
+		surveySubmit.disabled = !surveyHasAnswers();
+	};
+
+	bindForm(surveyForm, {
+		onSuccess() {
+			showDialogThanks();
+		},
+	});
+
+	surveyForm?.addEventListener(
+		"submit",
+		(event) => {
+			if (surveyHasAnswers()) return;
+			event.preventDefault();
+			event.stopImmediatePropagation();
+		},
+		true,
+	);
+
+	const syncSurveyOtherField = (radio: HTMLInputElement) => {
+		const box = surveyForm?.querySelector<HTMLElement>(`[data-other="${radio.name}"]`);
+		if (!box) return;
+		const show = radio.checked && radio.dataset.reveals === "other";
+		box.hidden = !show;
+		if (!show) {
+			const input = box.querySelector<HTMLInputElement>("input");
+			if (input) input.value = "";
+		}
+	};
+
+	const surveyRadio = (target: EventTarget | null): HTMLInputElement | null => {
+		if (!(target instanceof Element)) return null;
+		if (target instanceof HTMLInputElement && target.type === "radio") return target;
+		return target.closest("label")?.querySelector<HTMLInputElement>('input[type="radio"]') ?? null;
+	};
+
+	surveyForm?.addEventListener("mousedown", (event) => {
+		const radio = surveyRadio(event.target);
+		if (!radio) return;
+		radio.dataset.wasChecked = radio.checked ? "true" : "false";
+	});
+
+	surveyForm?.addEventListener("click", (event) => {
+		const radio = surveyRadio(event.target);
+		if (!radio || radio.dataset.wasChecked !== "true") return;
+		event.preventDefault();
+		radio.checked = false;
+		delete radio.dataset.wasChecked;
+		syncSurveyOtherField(radio);
+		updateSurveySubmit();
+	});
+
+	surveyForm?.addEventListener("change", (event) => {
+		const target = event.target;
+		if (target instanceof HTMLInputElement && target.type === "radio") {
+			syncSurveyOtherField(target);
+		}
+		updateSurveySubmit();
+	});
+
+	surveyForm?.addEventListener("input", () => updateSurveySubmit());
+
+	const closeDialog = () => dialog?.close();
+
+	dialog?.addEventListener("click", (event) => {
+		const target = event.target;
+		if (!(target instanceof Element)) return;
+		if (target.closest("[data-close]")) {
+			closeDialog();
+			return;
+		}
+		const card = dialog.querySelector(".dialog-card");
+		if (card && !card.contains(target)) closeDialog();
+	});
+	dialog?.querySelector("[data-skip]")?.addEventListener("click", () => showDialogThanks());
+	dialogLanding?.addEventListener("click", (event) => {
+		const target = event.target;
+		if (!(target instanceof Element)) return;
+		if (target.closest("[data-close]")) return;
+		if (!dialogCard?.classList.contains("dialog-card--intro")) return;
+		clearIntroTimers();
+		revealDialogForm();
+	});
+	dialog?.addEventListener("close", resetDialog);
+
+	section?.addEventListener("click", async (event) => {
+		const button = (event.target as Element | null)?.closest<HTMLButtonElement>("[data-share]");
+		if (!button || !section.contains(button)) return;
+		const note = button.parentElement?.parentElement?.querySelector<HTMLElement>("[data-copied]");
+		const url = `${location.origin}${location.pathname}#waitlist`;
+		const payload = {
+			title: site.name,
+			text: site.travelerForm.thanks.shareText,
+			url,
+		};
+
+		if (navigator.share) {
+			try {
+				await navigator.share(payload);
+				return;
+			} catch (error) {
+				if (error instanceof DOMException && error.name === "AbortError") return;
+			}
+		}
+
+		try {
+			await navigator.clipboard.writeText(url);
+			if (note) {
+				note.hidden = false;
+				note.textContent = site.travelerForm.thanks.copied;
+			}
+		} catch {
+			if (note) {
+				note.hidden = false;
+				note.textContent = url;
+			}
+		}
+	});
 </script>
 
 <style>
@@ -136,26 +478,470 @@ const form = site.travelerForm;
 		min-width: 0;
 	}
 
-	.form-head {
+	.form-head,
+	.thanks {
 		display: grid;
 		gap: 1rem;
 	}
 
 	.form-intro {
+		margin: 0;
 		font-size: var(--text-lg);
 		line-height: 1.45;
+		text-transform: uppercase;
+	}
+
+	.signup .field-label {
+		text-transform: uppercase;
+	}
+
+	.signup .check {
+		text-transform: none;
+	}
+
+	.thanks-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.share-note {
+		margin: 0;
+		font-size: var(--text-sm);
+	}
+
+	.dialog {
+		width: 100%;
+		max-width: none;
+		height: 100%;
+		max-height: none;
+		margin: 0;
+		padding: clamp(0.75rem, 3vw, 1.25rem);
+		border: 0;
+		background: transparent;
+		color: var(--black);
+	}
+
+	.dialog[open] {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.dialog::backdrop {
+		background: rgb(17 17 17 / 0.62);
+		backdrop-filter: blur(2px);
+	}
+
+	.dialog-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		width: min(46rem, 100%);
+		max-height: min(92svh, 48rem);
+		overflow: hidden;
+		background: var(--white);
+		border-radius: var(--radius);
+		box-shadow: 0 18px 48px rgb(17 17 17 / 0.22);
+		transition:
+			width 0.55s ease,
+			max-height 0.55s ease,
+			background-color 0.35s ease;
+	}
+
+	.dialog-card--intro {
+		width: min(32rem, calc(100% - 2.75rem));
+		min-height: 12rem;
+		max-height: min(42svh, 18rem);
+		background: var(--yellow);
+	}
+
+	.dialog-landing {
+		--landing-pad: clamp(2.5rem, 7vw, 3.5rem);
+		position: absolute;
+		inset: 0;
+		z-index: 3;
+		display: grid;
+		place-content: center;
+		justify-items: center;
+		padding: var(--landing-pad);
+		box-sizing: border-box;
+		background: var(--yellow);
+		border-radius: inherit;
+		text-align: center;
+		transition:
+			transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.45s ease;
+	}
+
+	.dialog-landing .dialog-close {
+		position: absolute;
+		top: calc(var(--landing-pad) - 0.25rem);
+		right: calc(var(--landing-pad) - 0.25rem);
+		margin: 0;
+	}
+
+	.dialog-card--intro .dialog-landing .dialog-close {
+		display: none;
+	}
+
+	.dialog-landing--exit {
+		transform: translateY(-108%);
+		opacity: 0;
+	}
+
+	.survey-success--center {
+		max-width: 22ch;
+		margin: 0;
+		padding: 0.35rem 0.75rem;
+		text-align: center;
+	}
+
+	.dialog-card:not(.dialog-card--revealed) .survey-panel {
+		opacity: 0;
+		visibility: hidden;
+		max-height: 0;
+		overflow: hidden;
+		pointer-events: none;
+		flex: 0;
+	}
+
+	.dialog-card--revealed .survey-panel {
+		opacity: 1;
+		visibility: visible;
+		max-height: none;
+		flex: 1;
+		pointer-events: auto;
+		animation: survey-panel-in 0.48s ease;
+	}
+
+	@keyframes survey-panel-in {
+		from {
+			opacity: 0;
+			transform: translateY(1.15rem);
+		}
+
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.dialog-card,
+		.dialog-landing,
+		.dialog-card--revealed .survey-panel {
+			transition: none;
+			animation: none;
+		}
+	}
+
+	.survey-panel {
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
+		flex: 1;
+	}
+
+	.dialog-header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: clamp(1.25rem, 3.5vw, 1.65rem) clamp(1.25rem, 3.5vw, 1.85rem);
+		background: var(--yellow);
+	}
+
+	.survey-success {
+		margin: 0;
+		font-family: var(--font-wordmark);
+		font-size: clamp(1.55rem, 4.2vw, 2.05rem);
+		font-weight: 400;
+		line-height: 1.05;
+		letter-spacing: -0.03em;
+		text-transform: none;
+		color: var(--black);
+		max-width: 22ch;
+	}
+
+	.dialog-close {
+		flex: none;
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		margin: -0.15rem -0.25rem 0 0;
+		border: 1.5px solid var(--black);
+		border-radius: 50%;
+		background: var(--white);
+		font-size: 1.35rem;
+		line-height: 1;
+		cursor: pointer;
+	}
+
+	.dialog-close:hover {
+		background: var(--black);
+		color: var(--white);
+	}
+
+	.survey {
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
+		flex: 1;
+		background: var(--white);
+		border-top: 1px solid rgb(17 17 17 / 0.08);
+	}
+
+	.survey-body {
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
+		flex: 1;
+	}
+
+	.survey-lede {
+		display: grid;
+		gap: 0.5rem;
+		padding: clamp(1.35rem, 3.5vw, 1.75rem) clamp(1.25rem, 3.5vw, 1.85rem) clamp(1rem, 2.5vw, 1.35rem);
+	}
+
+	.survey-intro {
+		margin: 0;
+		font-size: var(--text-lg);
+		line-height: 1.25;
+	}
+
+	.survey-scroll {
+		overflow: auto;
+		padding: 0.25rem clamp(1.25rem, 3.5vw, 1.85rem) clamp(1.5rem, 3.5vw, 2.25rem);
+		scrollbar-gutter: stable;
+	}
+
+	.survey-questions {
+		display: grid;
+		gap: clamp(1.25rem, 3vw, 1.75rem);
+		padding-bottom: clamp(0.75rem, 2vw, 1.25rem);
+	}
+
+	.survey-block {
+		margin: 0;
+		padding: 0 0 clamp(1.25rem, 3vw, 1.65rem);
+		border: 0;
+		border-bottom: 1px solid rgb(17 17 17 / 0.1);
+		display: grid;
+		gap: clamp(0.85rem, 2vw, 1.1rem);
+	}
+
+	.survey-block:last-child {
+		border-bottom: 0;
+		padding-bottom: 0.25rem;
+	}
+
+	.survey-block .legend {
+		font-size: var(--text-md);
+		font-weight: 600;
+		line-height: 1.35;
+		padding: 0;
+		margin-bottom: 0.5rem;
+	}
+
+	.survey-options {
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.survey-options--grid {
+		grid-template-columns: 1fr;
+	}
+
+	@media (min-width: 480px) {
+		.survey-options--grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.survey-block .choice {
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.7rem 0.9rem;
+		border: 1.5px solid rgb(17 17 17 / 0.14);
+		border-radius: calc(var(--radius) * 0.65);
+		background: var(--white);
+		cursor: pointer;
+		font-size: var(--text-sm);
+		line-height: 1.2;
+		text-transform: none;
+		transition:
+			background 0.12s ease,
+			border-color 0.12s ease;
+	}
+
+	.survey-block .choice:hover {
+		border-color: var(--black);
+	}
+
+	.survey-block .choice:has(input:checked) {
+		border-color: var(--black);
+		background: var(--yellow);
+	}
+
+	.survey-block .choice input {
+		margin-top: 0;
+	}
+
+	.other-field {
+		margin-top: 0.35rem;
+	}
+
+	.survey-foot {
+		display: grid;
+		gap: 0.85rem;
+		padding: clamp(1.15rem, 3vw, 1.45rem) clamp(1.25rem, 3.5vw, 1.85rem) clamp(1.25rem, 3.5vw, 1.65rem);
+		margin-top: auto;
+		border-top: 1px solid rgb(17 17 17 / 0.1);
+		background: var(--white);
+	}
+
+	.survey-submit {
+		width: 100%;
+	}
+
+	.survey-submit:disabled {
+		opacity: 0.45;
+		cursor: not-allowed;
+	}
+
+	.survey-skip {
+		justify-self: center;
+		border: 0;
+		background: transparent;
+		padding: 0.2rem 0.4rem;
+		font-family: var(--font-sans);
+		font-size: var(--text-sm);
+		letter-spacing: 0.06em;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+		cursor: pointer;
+		color: var(--black);
+	}
+
+	.survey-skip:hover {
+		color: var(--red);
+	}
+
+	.dialog-card--thanks {
+		background: var(--yellow);
+	}
+
+	.dialog-thanks {
+		position: relative;
+		display: grid;
+		gap: clamp(0.85rem, 2vw, 1.1rem);
+		align-content: center;
+		justify-items: center;
+		flex: 1;
+		min-height: min(85svh, 44rem);
+		padding: clamp(1.5rem, 4vw, 2rem) clamp(1.25rem, 3.5vw, 1.85rem);
+		text-align: center;
+	}
+
+	.dialog-thanks .dialog-close {
+		position: absolute;
+		top: clamp(0.85rem, 2.5vw, 1.1rem);
+		right: clamp(0.85rem, 2.5vw, 1.1rem);
+	}
+
+	.thanks-heading {
+		margin: 0;
+		padding-top: 0.35rem;
+		font-family: var(--font-wordmark);
+		font-size: clamp(3.25rem, 9vw, 5.5rem);
+		font-weight: 400;
+		line-height: 1;
+		letter-spacing: -0.03em;
+		text-transform: none;
+		color: var(--black);
+	}
+
+	.thanks-lede {
+		margin: 0;
+		font-size: var(--text-lg);
+		line-height: 1.35;
+		width: 100%;
+		max-width: 44ch;
+	}
+
+	.dialog-thanks .thanks-actions {
+		width: 100%;
+		max-width: 36rem;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+		margin-top: 0.35rem;
+	}
+
+	.dialog-thanks .thanks-actions .btn {
+		width: 100%;
+		min-height: 5.25rem;
+		padding: 1rem 0.75rem;
+		line-height: 1.2;
+		text-align: center;
+		white-space: normal;
+	}
+
+	@media (max-width: 520px) {
+		.dialog-thanks .thanks-actions {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.dialog-thanks .share-note {
+		margin: 0;
+		font-size: var(--text-sm);
+	}
+
+	.survey-block .choice input[type="radio"] {
+		appearance: none;
+		-webkit-appearance: none;
+		display: grid;
+		place-content: center;
+		width: 1.05rem;
+		height: 1.05rem;
+		border: 1.5px solid var(--black);
+		border-radius: 50%;
+		background: var(--white);
+		flex: none;
+	}
+
+	.survey-block .choice input[type="radio"]::before {
+		content: "";
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 50%;
+		background: var(--red);
+		transform: scale(0);
+	}
+
+	.survey-block .choice input[type="radio"]:checked::before {
+		transform: scale(1);
 	}
 
 	@media (max-width: 899px) {
-		.form-head {
+		.form-head,
+		.thanks {
 			justify-items: center;
 			text-align: center;
+		}
+
+		.thanks-actions {
+			justify-content: center;
 		}
 	}
 
 	@media (min-width: 900px) {
 		.waitlist-layout {
-			grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+			grid-template-columns: minmax(0, 0.96fr) minmax(18rem, 1.04fr);
 			align-items: stretch;
 		}
 
@@ -164,58 +950,68 @@ const form = site.travelerForm;
 			grid-column: 2;
 			grid-row: 1;
 			height: 100%;
+			min-height: 28rem;
 			aspect-ratio: auto;
 		}
 
 		.form-wrap {
 			grid-column: 1;
 			grid-row: 1;
+			display: flex;
+			flex-direction: column;
+			min-height: 28rem;
 		}
 
-		.waitlist-layout .form-grid.cols-2 {
-			grid-template-columns: 1fr;
+		.signup {
+			flex: 1;
+			min-height: 0;
+		}
+
+		.signup [data-fields] {
+			flex: 1;
+			min-height: 0;
 		}
 	}
 
-	@media (min-width: 1180px) {
-		.waitlist-layout .form-grid.cols-2 {
-			grid-template-columns: 1fr 1fr;
+	@media (min-width: 960px) {
+		.waitlist-layout :global(.waitlist-photo) {
+			min-height: 38rem;
+		}
+
+		.form-wrap {
+			min-height: 38rem;
 		}
 	}
 
 	.signup,
 	.signup [data-fields] {
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		gap: 1rem;
-	}
-
-	.required-note {
-		margin: 0.15rem 0 0;
 	}
 
 	.form-grid {
 		margin-bottom: 0.4rem;
 	}
 
-	/* Black text on yellow; orange stays on the button. */
 	.section-title {
 		color: var(--black);
 		font-size: clamp(3rem, 6.5vw, 5.6rem);
 	}
 
-	.signup .btn-red {
+	.signup .btn-red:not(.btn-reveal),
+	.survey .btn-red {
 		background: var(--black);
 		border-color: var(--black);
 		color: var(--white);
 	}
 
-	.signup .btn-red:hover {
+	.survey .btn-red:hover {
 		background: var(--black);
 		border-color: var(--black);
 		filter: brightness(1.25);
 	}
 
-	.choice input,
 	.check input {
 		accent-color: var(--orange);
 	}

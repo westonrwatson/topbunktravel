@@ -57,11 +57,13 @@ const photos = {
 				}
 			</div>
 			<div class="carousel-controls">
-				<button type="button" data-dir="-1" aria-label="Previous city">
-					<span aria-hidden="true">←</span>
+				<button type="button" class="btn btn-reveal" data-dir="-1" aria-label="Previous city">
+					<span class="btn-reveal-fill" aria-hidden="true"></span>
+					<span data-label aria-hidden="true">←</span>
 				</button>
-				<button type="button" data-dir="1" aria-label="Next city">
-					<span aria-hidden="true">→</span>
+				<button type="button" class="btn btn-reveal" data-dir="1" aria-label="Next city">
+					<span class="btn-reveal-fill" aria-hidden="true"></span>
+					<span data-label aria-hidden="true">→</span>
 				</button>
 			</div>
 		</div>
@@ -71,7 +73,12 @@ const photos = {
 
 <script>
 	import { initCarousel } from "../scripts/carousel";
+	import { bindButtonReveal } from "../scripts/buttonReveal";
+
 	initCarousel();
+	document
+		.querySelectorAll<HTMLElement>("[data-carousel] .btn-reveal")
+		.forEach((control) => bindButtonReveal(control));
 </script>
 
 <style>
@@ -172,21 +179,34 @@ const photos = {
 		margin-top: 0.9rem;
 	}
 
-	.carousel-controls button {
+	.carousel-controls .btn-reveal {
 		width: 2.75rem;
 		height: 2.75rem;
+		min-height: 2.75rem;
+		padding: 0;
 		border-radius: 50%;
 		border: 1.5px solid var(--red);
 		background: var(--white);
 		color: var(--red);
 		font-size: var(--text-md);
 		line-height: 1;
-		cursor: pointer;
 	}
 
-	.carousel-controls button:disabled {
+	.carousel-controls .btn-reveal .btn-reveal-fill {
+		background: var(--red);
+	}
+
+	.carousel-controls .btn-reveal.is-reveal-active {
+		color: var(--white);
+	}
+
+	.carousel-controls .btn-reveal:disabled {
 		opacity: 0.35;
 		cursor: not-allowed;
+	}
+
+	.carousel-controls .btn-reveal:disabled .btn-reveal-fill {
+		display: none;
 	}
 
 	@media (max-width: 799px) {

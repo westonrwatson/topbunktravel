@@ -1,10 +1,15 @@
 ---
 import { site } from "../content/site";
 
+interface Props {
+	bare?: boolean;
+}
+
+const { bare = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer">
+<footer class:list={["site-footer", bare && "site-footer--bare"]}>
 	<div class="wrap footer">
 		<a class="wordmark" href="/">Top Bunk Travel</a>
 		<div class="footer-bar">
@@ -23,6 +28,11 @@ const year = new Date().getFullYear();
 	.site-footer {
 		background: var(--red);
 		padding: clamp(1rem, 2.5vw, 1.5rem) 0;
+	}
+
+	.site-footer--bare {
+		background: var(--white);
+		padding-block: clamp(1.5rem, 4vw, 2.5rem);
 	}
 
 	.footer {
@@ -66,11 +76,11 @@ const year = new Date().getFullYear();
 		text-decoration: none;
 		font-size: var(--text-md);
 		text-transform: uppercase;
+		transition: opacity 0.15s ease;
 	}
 
 	.footer-links a:hover {
-		text-decoration: underline;
-		text-underline-offset: 0.2em;
+		opacity: 0.72;
 	}
 
 	.copy {
