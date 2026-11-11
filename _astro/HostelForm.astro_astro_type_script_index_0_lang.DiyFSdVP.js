@@ -1,0 +1,1 @@
+import{t as e}from"./form.DYiyocvA.js";import{t}from"./buttonReveal.BPoW9Lmh.js";var n=document.querySelector(`[data-form='hostel']`);e(n),t(n?.querySelector(`[data-hostel-submit]`)??null);
