@@ -8,6 +8,14 @@ export const site = {
 	title: "Top Bunk Travel | One pass. Vetted hostels. Your people.",
 	description:
 		"A prepaid pass for vetted hostels in Spain and Portugal. Credits last a year. Join the founding members, or list your hostel.",
+	share: {
+		title: "Top Bunk Travel",
+		description:
+			"One prepaid pass for vetted hostels in Spain and Portugal. Join the Founding 500 for early access and founding pricing.",
+		imageAlt: "Top Bunk Travel — a pass for vetted hostels in Spain and Portugal",
+		waitlistText:
+			"Join the Founding 500 waitlist for Top Bunk — one pass for vetted hostels in Spain and Portugal.",
+	},
 	contactEmail: "topbunktravel@gmail.com",
 	instagramUrl: "https://www.instagram.com/topbunktravel/",
 	tiktokUrl: "https://www.tiktok.com/@topbunktravel",

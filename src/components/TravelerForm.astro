@@ -444,8 +444,8 @@ const thanks = form.thanks;
 		const note = button.parentElement?.parentElement?.querySelector<HTMLElement>("[data-copied]");
 		const url = `${location.origin}${location.pathname}#waitlist`;
 		const payload = {
-			title: site.name,
-			text: site.travelerForm.thanks.shareText,
+			title: site.share.title,
+			text: site.share.waitlistText,
 			url,
 		};
 
