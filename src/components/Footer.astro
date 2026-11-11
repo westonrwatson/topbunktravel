@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import { site } from "../content/site";
+import footerCat from "../assets/images/footer-cat.png";
 
 interface Props {
 	bare?: boolean;
@@ -21,6 +23,18 @@ const year = new Date().getFullYear();
 			</ul>
 			<p class="copy">© {year} {site.footer.rights}</p>
 		</div>
+		<div class="footer-cat" aria-hidden="true">
+			<Image
+				src={footerCat}
+				alt=""
+				width={1024}
+				height={969}
+				widths={[160, 240, 320]}
+				sizes="7.5rem"
+				loading="lazy"
+				decoding="async"
+			/>
+		</div>
 	</div>
 </footer>
 
@@ -36,6 +50,8 @@ const year = new Date().getFullYear();
 	}
 
 	.footer {
+		position: relative;
+		overflow: visible;
 		container-type: inline-size;
 		display: grid;
 		gap: clamp(1.25rem, 3vw, 2rem);
@@ -45,7 +61,13 @@ const year = new Date().getFullYear();
 		padding: clamp(1.15rem, 2.4vw, 1.85rem);
 	}
 
+	.footer-cat {
+		display: none;
+	}
+
 	.wordmark {
+		position: relative;
+		z-index: 0;
 		display: block;
 		width: 100%;
 		color: var(--yellow);
@@ -55,6 +77,8 @@ const year = new Date().getFullYear();
 	}
 
 	.footer-bar {
+		position: relative;
+		z-index: 0;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -91,8 +115,18 @@ const year = new Date().getFullYear();
 	}
 
 	@media (max-width: 799px) {
+		.site-footer {
+			padding-block: clamp(1.5rem, 5vw, 2.25rem);
+		}
+
+		.site-footer--bare {
+			padding-block: clamp(2rem, 6vw, 3rem);
+		}
+
 		.footer {
 			text-align: center;
+			gap: clamp(1.75rem, 5vw, 2.75rem);
+			padding: clamp(1.75rem, 5.5vw, 2.65rem);
 		}
 
 		.wordmark {
@@ -102,6 +136,7 @@ const year = new Date().getFullYear();
 
 		.footer-bar {
 			align-items: center;
+			gap: 1.25rem;
 		}
 
 		.footer-links {
@@ -109,7 +144,7 @@ const year = new Date().getFullYear();
 			flex-wrap: wrap;
 			justify-content: center;
 			align-items: center;
-			gap: 0.6rem 1.4rem;
+			gap: 0.85rem 1.4rem;
 		}
 	}
 
@@ -125,6 +160,25 @@ const year = new Date().getFullYear();
 			flex-direction: row;
 			align-items: baseline;
 			gap: clamp(1.25rem, 3vw, 2.75rem);
+		}
+
+		.footer-cat {
+			display: block;
+			position: absolute;
+			right: clamp(0.2rem, 0.8vw, 0.45rem);
+			bottom: calc(clamp(1.15rem, 2.4vw, 1.85rem) + 2.35em);
+			z-index: 2;
+			line-height: 0;
+			pointer-events: none;
+		}
+
+		.footer-cat :global(img) {
+			display: block;
+			width: min(16vw, 7.5rem);
+			height: auto;
+			object-fit: contain;
+			object-position: bottom right;
+			mix-blend-mode: screen;
 		}
 	}
 </style>

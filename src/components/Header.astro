@@ -1,11 +1,15 @@
 ---
 import { site } from "../content/site";
+import navStar from "../assets/images/nav-star.png";
 
 const [left, right] = [site.nav.slice(0, 2), site.nav.slice(2)];
 ---
 
 <header class="site-header">
-	<a class="wordmark wordmark-mobile" href="/">{site.name}</a>
+	<a class="wordmark wordmark-mobile" href="/">
+		<img class="wordmark-spark" src={navStar.src} alt="" width="1024" height="902" decoding="async" />
+		{site.name}
+	</a>
 	<button
 		type="button"
 		class="burger"
@@ -23,7 +27,10 @@ const [left, right] = [site.nav.slice(0, 2), site.nav.slice(2)];
 				))
 			}
 		</div>
-		<a class="wordmark wordmark-desktop" href="/">{site.name}</a>
+		<a class="wordmark wordmark-desktop" href="/">
+			<img class="wordmark-spark" src={navStar.src} alt="" width="1024" height="902" decoding="async" />
+			{site.name}
+		</a>
 		<div class="nav-group">
 			{
 				right.map((item) => (
@@ -40,6 +47,23 @@ const [left, right] = [site.nav.slice(0, 2), site.nav.slice(2)];
 </script>
 
 <style>
+	.site-header .wordmark {
+		position: relative;
+		isolation: isolate;
+		z-index: 0;
+	}
+
+	.site-header .wordmark-spark {
+		position: absolute;
+		left: 50%;
+		top: 52%;
+		z-index: -1;
+		width: 3.4em;
+		height: auto;
+		transform: translate(-50%, -50%);
+		pointer-events: none;
+	}
+
 	.site-header {
 		position: relative;
 		background: var(--white);
@@ -119,8 +143,8 @@ const [left, right] = [site.nav.slice(0, 2), site.nav.slice(2)];
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		min-height: 4.5rem;
-		padding: 0.4rem var(--gutter);
+		min-height: 5.5rem;
+		padding: 0.85rem var(--gutter);
 	}
 
 	.site-nav {
@@ -142,7 +166,7 @@ const [left, right] = [site.nav.slice(0, 2), site.nav.slice(2)];
 		z-index: 1;
 		height: 100dvh;
 		background: var(--white);
-		padding: 5.5rem var(--gutter) 2.5rem;
+		padding: 6.35rem var(--gutter) 2.5rem;
 	}
 
 	.site-nav a:not(.wordmark) {
@@ -202,7 +226,7 @@ const [left, right] = [site.nav.slice(0, 2), site.nav.slice(2)];
 		.site-header {
 			display: block;
 			min-height: 0;
-			padding: 0.85rem 0 0.35rem;
+			padding: 1.15rem 0 1rem;
 		}
 
 		.wordmark-mobile,
@@ -249,6 +273,11 @@ const [left, right] = [site.nav.slice(0, 2), site.nav.slice(2)];
 			display: inline-block;
 			font-size: clamp(2.5rem, 4vw, 3.5rem);
 			padding: 0 0.5rem;
+		}
+
+		.site-header .wordmark-desktop .wordmark-spark {
+			width: 2.5em;
+			top: 54%;
 		}
 	}
 

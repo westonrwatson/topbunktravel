@@ -1,7 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import { site } from "../content/site";
 import FilmImage from "./FilmImage.astro";
 import spencerEyes from "../assets/images/spencer-eyes.jpg";
+import waitlistHalftone from "../assets/images/waitlist-halftone.png";
 
 const endpoint =
 	import.meta.env.PUBLIC_FORMS_ENDPOINT?.trim() ||
@@ -13,6 +15,18 @@ const thanks = form.thanks;
 ---
 
 <section class="section" id="waitlist" aria-labelledby="waitlist-title">
+	<div class="waitlist-back" aria-hidden="true">
+		<Image
+			src={waitlistHalftone}
+			alt=""
+			width={575}
+			height={1024}
+			widths={[280, 400, 575]}
+			sizes="min(116vw, 40rem)"
+			loading="lazy"
+			decoding="async"
+		/>
+	</div>
 	<div class="wrap waitlist-layout">
 		<div class="form-wrap">
 			<div class="form-head" data-signup-head>
@@ -448,8 +462,26 @@ const thanks = form.thanks;
 
 <style>
 	#waitlist {
+		position: relative;
+		overflow: hidden;
 		background: var(--yellow);
 		color: var(--black);
+	}
+
+	.waitlist-back {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: min(116vw, 40rem);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.waitlist-back :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		mix-blend-mode: screen;
 	}
 
 	.field-error {
@@ -459,6 +491,8 @@ const thanks = form.thanks;
 	}
 
 	.waitlist-layout {
+		position: relative;
+		z-index: 1;
 		display: grid;
 		gap: clamp(1.5rem, 3vw, 2.75rem);
 		align-items: start;
@@ -924,6 +958,10 @@ const thanks = form.thanks;
 	}
 
 	@media (max-width: 899px) {
+		.waitlist-back {
+			transform: translateY(-4rem);
+		}
+
 		.form-head,
 		.thanks {
 			justify-items: center;
