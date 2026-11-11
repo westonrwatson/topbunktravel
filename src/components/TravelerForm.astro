@@ -41,7 +41,7 @@ const thanks = form.thanks;
 				data-saved-label={site.forms.spotSaved}
 			>
 				<div data-fields>
-					<div class="form-grid">
+					<div class="form-grid" data-signup-inputs>
 						<div class="field">
 							<label class="field-label" for="traveler-email">
 								{form.email} <span class="req" aria-hidden="true">*</span>
@@ -116,7 +116,7 @@ const thanks = form.thanks;
 		<div class="dialog-card dialog-card--intro" data-dialog-card>
 			<div class="dialog-landing" data-dialog-landing>
 				<button class="dialog-close" type="button" data-close aria-label="Close">×</button>
-				<p class="survey-success survey-success--center" tabindex="-1">
+				<p class="survey-success survey-success--center" role="status" aria-live="polite">
 					{form.success.split("\n").map((line, index, lines) => (
 						<>
 							{line}
@@ -268,7 +268,9 @@ const thanks = form.thanks;
 		landingTimer = window.setTimeout(() => {
 			dialogLanding.hidden = true;
 			dialogLanding.classList.remove("dialog-landing--exit");
-			dialog?.querySelector<HTMLElement>("#waitlist-success")?.focus();
+			dialog
+				?.querySelector<HTMLElement>(".survey-panel .dialog-close")
+				?.focus({ preventScroll: true });
 			updateSurveySubmit();
 		}, prefersReducedMotion() ? 0 : revealMs);
 	};
@@ -322,11 +324,11 @@ const thanks = form.thanks;
 			applySavedSubmitState(form);
 			const email = form.querySelector<HTMLInputElement>("[name='email']");
 			if (surveyEmail && email) surveyEmail.value = email.value.trim();
+			if (document.activeElement instanceof HTMLElement) {
+				document.activeElement.blur();
+			}
 			playDialogIntro();
 			dialog?.showModal();
-			window.requestAnimationFrame(() => {
-				dialogLanding?.querySelector<HTMLElement>(".survey-success")?.focus();
-			});
 		},
 	});
 
@@ -695,6 +697,13 @@ const thanks = form.thanks;
 		background: var(--yellow);
 	}
 
+	.survey-success:focus,
+	.survey-success:focus-visible,
+	.thanks-heading:focus,
+	.thanks-heading:focus-visible {
+		outline: none;
+	}
+
 	.survey-success {
 		margin: 0;
 		font-family: var(--font-wordmark);
@@ -1048,6 +1057,10 @@ const thanks = form.thanks;
 
 	.form-grid {
 		margin-bottom: 0.4rem;
+	}
+
+	.signup[data-signup-complete="true"] [data-signup-inputs] {
+		display: none;
 	}
 
 	.section-title {
